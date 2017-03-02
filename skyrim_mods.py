@@ -226,17 +226,20 @@ class RealisticSmokeAndEmbers(SkyrimMod):
     def apply(self):
         extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
 
+# TODO: Remove fake mod
+class FakeMod(SkyrimMod):
+    pass
+
 class ParticlePatchForENB(SkyrimMod):
 
     def relationships(self):
-        return ( #modbase.Dependency(self, RealisticSmokeAndEmbers()),
-                 modbase.Superiority(self, StaticMeshImprovementMod()) )
+        return (modbase.Dependency(self, FakeMod()),
+                modbase.Superiority(self, FakeMod()),)
 
 class SubsurfaceScatteringPatchForENB(SkyrimMod):
 
     def relationships(self):
-        return ( modbase.Dependency(self, ParticlePatchForENB()),
-                 modbase.Superiority(self, StaticMeshImprovementMod()) )
+        return (modbase.Dependency(self, ParticlePatchForENB()),)
 
 class ParallaxTerrain4K(SkyrimMod):
     def apply(self):

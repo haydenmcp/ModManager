@@ -120,7 +120,8 @@ def run_skyrim_install():
     # ]
 
     mods = [skyrim_mods.ParticlePatchForENB(),
-            skyrim_mods.SubsurfaceScatteringPatchForENB()]
+            skyrim_mods.SubsurfaceScatteringPatchForENB(),
+            skyrim_mods.FakeMod()]
 
     modiclient = ModInstallerClient()
     modiclient.install(mods)
