@@ -1,3 +1,8 @@
+###############################################################################
+#   @description: Module containing mods for skyrim.
+#   @author: Hayden McParlane
+###############################################################################
+
 import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

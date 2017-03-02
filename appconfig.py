@@ -1,3 +1,7 @@
+###############################################################################
+#   @description: Module containing mods for skyrim.
+#   @author: Hayden McParlane
+###############################################################################
 import os
 
 TEMP_DIRECTORY = os.path.abspath(r".\tmp")
