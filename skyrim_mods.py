@@ -17,9 +17,7 @@ class SkyrimMod(ModBase):
 # Environment/Graphic mods
 ###############################################################################
 class OptimizedVanillaTextures(SkyrimMod):
-
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def run_post_processing(self):
         log.info("Running 'Textures Install.vbs'")
         install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIRECTORY)
         if os.path.exists(install_script):
@@ -27,204 +25,213 @@ class OptimizedVanillaTextures(SkyrimMod):
 
 class UnofficialHighResolutionPatch(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, OptimizedVanillaTextures()),)
 
 class UnofficialSkyrimPatch(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, UnofficialHighResolutionPatch()),)
 
 class UnofficialSkyrimLegendaryEditionPatch(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, UnofficialHighResolutionPatch()),)
 
 class StaticMeshImprovementMod(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    # TODO: This can have a dependency on either Unofficial Skyrim Patch or
+    # TODO: UnofficialSkyrimLegendaryEditionPatch. How to resolve?
+    def relationships(self):
+        return (modbase.Dependency(self, UnofficialSkyrimPatch()),)
 
 class RuinsClutterImproved(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, StaticMeshImprovementMod()),)
 
 class AlternateStart(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RuinsClutterImproved()),)
 
 class CinematicFireEffects(SkyrimMod):
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, AlternateStart()),)
 
 class HDEnhancedTerrain(SkyrimMod):
-
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, CinematicFireEffects()),)
 
 class SkyrimDistanceOverhaul(SkyrimMod):
-
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, HDEnhancedTerrain()),)
 
 class SkyrimDistanceOverhaulSkymillsPatch(SkyrimMod):
-
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    # TODO: Patches should be a part of main mod. How to resolve?
+    def relationships(self):
+        return (modbase.Dependency(self, SkyrimDistanceOverhaul()),)
 
 class AnimatedDistantWaterfallsAndWindmills(SkyrimMod):
-
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SkyrimDistanceOverhaulSkymillsPatch()),)
 
 class SkyrimHDFullVersion(SkyrimMod):
-
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, AnimatedDistantWaterfallsAndWindmills()),)
 
 class SkyrimCityBeautificationAllInOneByJK(SkyrimMod):
-
     def apply(self):
         #extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
         # TODO: Come back to this mod. Seems like nexus is downloading incorrect archive size.
         pass
 
 class VividLandscapesDungeonsAndRuins(SkyrimMod):
+    def relationships(self):
+        return (modbase.Dependency(self, SkyrimHDFullVersion()),)
 
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    # TODO: Move to configuration function?
+    def run_post_processing(self):
         upsert_configuration(r"SkyrimPrefs.ini", {"bDeferredShadows": 1})
         upsert_configuration(r"enblocal.ini", {"FixParallaxBugs": True})
 
 class VividLandscapesDungeonsAndRuinsSMIMPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesDungeonsAndRuins()),)
 
 class VividLandscapesVolcanicArea(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesDungeonsAndRuinsSMIMPatch()),)
 
 class AMidianBornCavesAndMines2k(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesVolcanicArea()),)
 
 class ImmersiveRoads(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, AMidianBornCavesAndMines2k()),)
+
+    def run_post_processing(self):
         upsert_configuration(r"enblocal.ini", {"FixParallaxBugs": True})
 
 class ImmersiveRoadsSnowShinePatch(SkyrimMod):
+    # TODO: May not need this. Snow too dark.
     def apply(self):
         extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
 
 class SkyrimFloraOverhaul(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+
+    # TODO: Patch above isn't used. If desired, this dependency needs to be updated.
+    def relationships(self):
+        return (modbase.Dependency(self, ImmersiveRoads()),)
 
 class SkyrimFloraOverhaulTallPines(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SkyrimFloraOverhaul()),)
 
 class TreesHD(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SkyrimFloraOverhaulTallPines()),)
 
 class SimplyBiggerTrees(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, TreesHD()),)
 
 class SimplyBiggerTreesSlowerBranches(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SimplyBiggerTrees()),)
 
 class ParallaxTreebark4K(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SimplyBiggerTreesSlowerBranches()),)
 
 class ParallaxTreebark4KSimplyBiggerTreesPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ParallaxTreebark4K()),)
 
 class ImmersiveFallenTrees(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+
+    # TODO: This dependency is purely for flow of install. Clearly this isn't a
+    # TODO: dependency of this mod. Need to redesign.
+    def relationships(self):
+        return (modbase.Dependency(self, ParallaxTreebark4KSimplyBiggerTreesPatch()),)
 
 class FencesOfSkyrim(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ImmersiveFallenTrees()),)
 
 class RusticWindows2K(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, FencesOfSkyrim()),)
 
 class VerdantGrassPlugin(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RusticWindows2K()),)
+
+    def run_post_processing(self):
         upsert_configuration(r"Skyrim.ini", {"iMaxGrassTypesPerTexure": 15}) #TODO: Add [Grass] section
         upsert_configuration(r"Skyrim.ini", {"iMinGrassSize": 60})
 
 class VerdantGrassPluginDarkGrassTextureOption(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VerdantGrassPlugin()),)
 
 class NaturalGrassTextureFloor(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VerdantGrassPluginDarkGrassTextureOption()),)
 
 class RealVisionFloraPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, NaturalGrassTextureFloor()),)
 
 class HighDefinitionIvy2K(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealVisionFloraPatch()),)
 
 class DetailedRugs(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, HighDefinitionIvy2K()),)
 
 class PureWatersLegendaryEdition(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, DetailedRugs()),)
 
 class PureWatersLandscapeTextures(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, PureWatersLegendaryEdition()),)
 
 class VividLandscapesRockingStonesParallax(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, PureWatersLandscapeTextures()),)
 
 class VividLandscapesCliffsAndCreeks(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesRockingStonesParallax()),)
 
 class VividLandscapesRockingStonesCompatibilityPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesCliffsAndCreeks()),)
 
 class VividLandscapesTundraMossRevisited(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesRockingStonesCompatibilityPatch()),)
 
 class VividLandscapesTundraSMIMPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesTundraMossRevisited()),)
 
 class VividLandscapesTundraMossMountainPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesTundraSMIMPatch()),)
 
 class FinerDust(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, VividLandscapesTundraMossMountainPatch()),)
 
 class RealisticSmokeAndEmbers(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, FinerDust()),)
 
 # TODO: Remove fake mod
 class FakeMod(SkyrimMod):
@@ -233,189 +240,197 @@ class FakeMod(SkyrimMod):
 class ParticlePatchForENB(SkyrimMod):
 
     def relationships(self):
-        return (modbase.Dependency(self, FakeMod()),
-                modbase.Superiority(self, FakeMod()),)
+        return (modbase.Dependency(self, RealisticSmokeAndEmbers()),
+                modbase.Superiority(self, StaticMeshImprovementMod()))
 
 class SubsurfaceScatteringPatchForENB(SkyrimMod):
 
     def relationships(self):
-        return (modbase.Dependency(self, ParticlePatchForENB()),)
+        return (modbase.Dependency(self, ParticlePatchForENB()),
+                modbase.Superiority(self, StaticMeshImprovementMod()))
 
 class ParallaxTerrain4K(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SubsurfaceScatteringPatchForENB()),)
 
 class CoastBeachTexturesForParallax(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ParallaxTerrain4K()),)
 
 class PineForestTexturesForParallax(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, CoastBeachTexturesForParallax()),)
 
 class ClimatesOfTamriel(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, PineForestTexturesForParallax()),)
 
 class ClimatesOfTamrielSupremeStorms(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ClimatesOfTamriel()),)
 
 class ClimatesOfTamrielWeatherPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ClimatesOfTamrielSupremeStorms()),)
 
 class TrueStorms(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ClimatesOfTamrielWeatherPatch()),)
 
 class RealisticLightingOverhaul(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, TrueStorms()),)
 
 class LanternsOfSkyrim(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealisticLightingOverhaul()),)
 
 
 # TODO: Separate Enb out from Skyrim-specific mod
 class EnbSeriesV308(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_base_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, LanternsOfSkyrim()),)
 
 class RealVisionENB(SkyrimMod):
-    def apply(self):
-        # TODO: After this extraction runs, need to run installer for realvision.
-        # TODO: Make specified file modification under RealVision ENB manual install.
-        extract_to_skyrim_base_folder(compressed_file(self.__class__.__name__))
+    # def apply(self):
+    #     # TODO: After this extraction runs, need to run installer for realvision.
+    #     # TODO: Make specified file modification under RealVision ENB manual install.
+    #     extract_to_skyrim_b
+    # ase_folder(compressed_file(self.__class__.__name__))
+
+    # TODO: Use realvision auto-installer after extraction. currently, file modifications don't take place.
+    def run_post_processing(self):
+        log.info("Running 'Textures Install.vbs'")
+        install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIRECTORY)
+        if os.path.exists(install_script):
+            subprocess.call(["cscript.exe", install_script])
+
+    def relationships(self):
+        return (modbase.Dependency(self, EnbSeriesV308()),)
 
 class RealVisionFloraPatch(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealVisionENB()),)
 
 
 ###############################################################################
 # Model mods
 ###############################################################################
 class ShowRaceMenuPrecacheKiller(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealVisionFloraPatch()),)
 
 class XeniusCharacterEnhancementFull(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ShowRaceMenuPrecacheKiller()),)
 
 class ApachiiSkyHairFull(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, XeniusCharacterEnhancementFull()),)
 
 class ApachiiSkyHairFemale(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ApachiiSkyHairFull()),)
 
 class ApachiiSkyHairMale(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ApachiiSkyHairFemale()),)
 
 class ApachiiSkyHairNaturalRetexture(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ApachiiSkyHairMale()),)
 
 class DimonizedUNPFemaleBody(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ApachiiSkyHairNaturalRetexture()),)
 
 class AllInOneFacePackUNP(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
-
-class NoMoreBlockyFaces(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, DimonizedUNPFemaleBody()),)
 
 class RealGirlsRealisticBodyTextureUNP(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, AllInOneFacePackUNP()),)
 
 class BetterMalesFace(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealGirlsRealisticBodyTextureUNP()),)
 
 class BetterMalesBody(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, BetterMalesFace()),)
 
 class HighDefinitionTeeth(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, BetterMalesBody()),)
 
-class SkySightSkinsHDMaleTextures(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+# class SkySightSkinsHDMaleTextures(SkyrimMod):
+#     def relationships(self):
+#         return (modbase.Dependency(self, HighDefinitionTeeth()),)
 
 class EyesOfBeauty(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, HighDefinitionTeeth()),)
 
 class EyesOfBeautyNPC(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, EyesOfBeauty()),)
 
 class RealisticRagdollsAndForce(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, EyesOfBeautyNPC()),)
 
-class XVisionChildrenFixBubbleFace(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
-
-class EnhancedCharacterEdit(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+# class EnhancedCharacterEdit(SkyrimMod):
+#     def apply(self):
+#         extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
 
 ###############################################################################
 # Immersion mods
 ###############################################################################
 
 class SkyUI5(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealisticRagdollsAndForce()),)
 
 class InterestingNPCs(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, SkyUI5()),)
 
 class WetAndColdRegularEdition(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, InterestingNPCs()),)
 
 class WetAndColdAshes(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, WetAndColdRegularEdition()),)
 
 class CompleteCampingSystem(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, WetAndColdAshes()),)
 
 class Tentapalooza(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, CompleteCampingSystem()),)
 
 class FrostfallSurvival(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, Tentapalooza()),)
 
 class RealisticNeedsAndDiseases(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, FrostfallSurvival()),)
 
 class ImmersivePatrols(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, RealisticNeedsAndDiseases()),)
 
 class TouringCarriages(SkyrimMod):
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
+    def relationships(self):
+        return (modbase.Dependency(self, ImmersivePatrols()),)
+
+class LanternsOfSkyrim(SkyrimMod):
+    def relationships(self):
+        return (modbase.Dependency(self, TouringCarriages()),)
 
 
 ###############################################################################

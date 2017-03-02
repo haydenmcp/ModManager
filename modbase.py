@@ -1,22 +1,17 @@
 class ModBase(object):
 
-    def install(self):
-        self.setup()
-        self.apply()
-        self.cleanup()
-
-    def setup(self):
-        pass
-
-    def apply(self):
-        raise NotImplementedError()
-
-    def cleanup(self):
-        pass
-
     def relationships(self):
+        '''Should return relationships to other mods (i.e, Dependencies, Superiority, etc)'''
         return list()
 
+    def run_post_processing(self):
+        '''Processing that needs to occur after installation should be placed here'''
+        pass
+
+
+###################################################################################
+#   Graph Definitions
+###################################################################################
 class Relationship(object):
 
     def __init__(self, source_mod, target_mod):

@@ -34,6 +34,9 @@ class SkyrimModInstallationManager(ModInstallationManager):
         self._installation_progress = dict()
         self._mods_to_install = dict()
 
+    # TODO: Mods shouldn't need to be added in order to be resolved. Dependencies shouldn't
+    # TODO: Need to be defined in mods list they should be auto-resolved. Borrow from plugin arch
+    # TODO: and cache mods?
     def add(self, mod):
         if mod is not None:
             mod_name = mod.__class__.__name__
@@ -60,6 +63,7 @@ class SkyrimModInstallationManager(ModInstallationManager):
                         for file in files_to_install:
                             log.debug("File: {0}".format(file))
                             archive.extract(file, appconfig.SKYRIM_DATA_DIRECTORY)
+                    mod.run_post_processing()
                     log.info("Installation Successful: {0}".format(mod_name))
                     self._set_mod_progress(mod, INSTALLED)
                 except Exception as e:
