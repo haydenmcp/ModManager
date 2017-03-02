@@ -48,7 +48,6 @@ class SkyrimModManager(ModManager):
             for mod in mods:
                 if is_valid_mod(mod):
                     if self.is_install_pending(mod):
-                        log.info("Installing mod: {0}".format(mod.__class__.__name__))
                         self._handle_dependencies(mod.dependencies())
                         self._handle_superiorities(mod.superiorities())
                         self._install_mod(mod)
@@ -59,6 +58,7 @@ class SkyrimModManager(ModManager):
 
     def _install_mod(self, mod):
         if is_valid_mod(mod):
+            log.info("Installing mod: {0}".format(mod.__class__.__name__))
             install_dir = mod.install_directory()
             log.info("Extracting files to: {0}".format(install_dir))
             with ZipFile(compressed_filename(self._game_mod_dir, mod.__class__.__name__)) as archive:
@@ -115,7 +115,7 @@ class SkyrimModManager(ModManager):
         if is_valid_mod(mod):
             for dependency in mod.dependencies():
                 if is_valid_dependency(dependency):
-                    self._map_mod_relationships(dependency.target_mod)
+                    self._map_mod_relationships([dependency.target_mod])
 
     def _register_patches(self, mod):
         if is_valid_mod(mod):
@@ -134,7 +134,7 @@ class SkyrimModManager(ModManager):
             self._registered_file_modifications[mod] = zipinfos
 
     def _is_registered(self, mod):
-        return is_valid_mod(mod) and self._registered_file_modifications[mod] is not None
+        return is_valid_mod(mod) and mod in self._registered_file_modifications
 
     def _update_installation_status(self, mod, status):
         if is_valid_mod(mod) and isinstance(status, InstallStatus):

@@ -10,7 +10,7 @@ def run_skyrim_install():
 
     client = ModManagerClient()
     client.install_mod_packages([
-        skyrim_packages.FoundationPatches(),
+        skyrim_packages.FoundationPatchPack(),
     ])
 
     # client.install_mod_packages([
