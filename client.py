@@ -1,5 +1,5 @@
 ###############################################################################
-#   @description: Module containing mods for skyrim.
+#   @description: Client used to install mod packages.
 #   @author: Hayden McParlane
 ###############################################################################
 
@@ -13,10 +13,6 @@ _mod_manager = SkyrimModInstallationManager()
 
 class ModManagerClient(object):
 
-    def install_mods(self, mod_packages):
+    def install_mod_packages(self, mod_packages):
         if is_populated(mod_packages):
             _mod_manager.install_mod_packages(mod_packages)
-
-    def install(self, mods):
-        if is_populated(mods):
-            _mod_manager.install_mods(mods)

@@ -1,5 +1,7 @@
 ###############################################################################
-#   @description: Module containing mods for skyrim.
+#   @description: The mod management engine responsible for executing
+#   mod installation, etc.
+#
 #   @author: Hayden McParlane
 ###############################################################################
 from common import *
@@ -20,7 +22,7 @@ class ModInstallationManager(object):
     def install_mod_packages(self, mod_packages):
         raise NotImplementedError()
 
-    def install_mods(self):
+    def install_mods(self, mods):
         raise NotImplementedError()
 
 ###############################################################################
@@ -32,30 +34,39 @@ class SkyrimModInstallationManager(ModInstallationManager):
     def __init__(self):
         self._mod_installation_status = dict()
         self._registered_file_modifications = dict()
-        self._app_mod_dir = appconfig.SKYRIM_APP_MOD_DIRECTORY
+        self._game_mod_dir = appconfig.SKYRIM_APP_MOD_DIRECTORY
 
     def install_mod_packages(self, mod_packages):
         if is_populated(mod_packages):
             self._map_package_relationships(mod_packages)
             for mod_package in mod_packages:
                 if is_valid_package(mod_package):
-                    self.install_mods(mod_package.mods())
+                    self._install_mods(mod_package.mods())
 
-    def install_mods(self, mods):
+    def _install_mods(self, mods):
         if is_populated(mods):
             for mod in mods:
-                if is_valid_mod(mod) and self.is_install_pending(mod):
-                    log.info("Installing mod: {0}".format(mod.__class__.__name__))
-                    self._handle_dependencies(mod.dependencies())
-                    self._handle_superiorities(mod.superiorities())
-                    self._install_mod(mod)
-                    self._handle_patches(mod.patches())
-                    log.info("Installation Successful: {0}".format(mod.__class__.__name__))
+                if is_valid_mod(mod):
+                    if self.is_install_pending(mod):
+                        log.info("Installing mod: {0}".format(mod.__class__.__name__))
+                        self._handle_dependencies(mod.dependencies())
+                        self._handle_superiorities(mod.superiorities())
+                        self._install_mod(mod)
+                        self._handle_patches(mod.patches())
+                        log.info("Installation Successful: {0}".format(mod.__class__.__name__))
+                    else:
+                        log.debug("Mod Already Installed: {0}".format(mod.__class__.__name__))
 
     def _install_mod(self, mod):
         if is_valid_mod(mod):
-            extract_dir = mod.install_directory()
-            # TODO:
+            install_dir = mod.install_directory()
+            log.info("Extracting files to: {0}".format(install_dir))
+            with ZipFile(compressed_filename(self._game_mod_dir, mod.__class__.__name__)) as archive:
+                files_to_install = self._registered_file_modifications[mod]
+                if is_populated(files_to_install):
+                    for file in files_to_install:
+                        log.debug("\t{0}".format(file.filename))
+                        archive.extract(file, install_dir)
             self._update_installation_status(mod, InstallStatus.COMPLETE)
 
     def _handle_dependencies(self, dependencies):
@@ -79,13 +90,10 @@ class SkyrimModInstallationManager(ModInstallationManager):
                 if is_valid_superiority(superiority):
                     superior_mod = superiority.target_mod
                     inferior_mod = superiority.source_mod
-                    log.info("Resolving superiority of mod: {0}".format(superior_mod.__class__.__name__))
+                    log.info("Configuring superiority of mod: {0}".format(superior_mod.__class__.__name__))
                     files_to_avoid = self._registered_file_modifications[superior_mod]
-                    log.debug("Superior files for {0}: {1}".format(superior_mod.__class__.__name__, files_to_avoid))
                     inferior_mod_files = self._registered_file_modifications[inferior_mod]
-                    log.debug("Inferior files for {0}: {1}".format(inferior_mod.__class__.__name__, inferior_mod_files))
                     updated_files_to_modify = set_difference_zipinfos(inferior_mod_files, files_to_avoid)
-                    log.debug("Updated {0} files: {1}".format(inferior_mod.__class__.__name__, inferior_mod_files))
                     self._update_file_modifications(inferior_mod, updated_files_to_modify)
 
     def _map_package_relationships(self, mod_packages):
@@ -120,7 +128,7 @@ class SkyrimModInstallationManager(ModInstallationManager):
 
     def _register_mod(self, mod):
         if is_valid_mod(mod):
-            compressed_entities = compressed_members(self._app_mod_dir, mod)
+            compressed_entities = compressed_members(self._game_mod_dir, mod)
             self._update_file_modifications(mod, isolate_files(compressed_entities))
             self._update_installation_status(mod, InstallStatus.PENDING)
 
@@ -172,7 +180,6 @@ def is_valid_superiority(superiority):
     return superiority is not None and isinstance(superiority, modbase.Superiority)
 
 def set_difference_zipinfos(zipinfos1, zipinfos2):
-    # TODO: Better naming
     new1 = copy.deepcopy(zipinfos1)
     new2 = copy.deepcopy(zipinfos2)
     for info2 in new2:

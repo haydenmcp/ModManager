@@ -1,7 +1,12 @@
 ###############################################################################
-#   @description: Module containing mods for skyrim.
+#   @description: Base module for all mod-related objects.
 #   @author: Hayden McParlane
 ###############################################################################
+
+class ModPackage(object):
+
+    def mods(self):
+        return frozenset()
 
 class ModBase(object):
 

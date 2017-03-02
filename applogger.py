@@ -1,5 +1,5 @@
 ###############################################################################
-#   @description: Module containing mods for skyrim.
+#   @description: The application logger with standard configurations.
 #   @author: Hayden McParlane
 ###############################################################################
 
