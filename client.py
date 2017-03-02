@@ -4,12 +4,12 @@
 ###############################################################################
 
 from common import *
-from management_engine import SkyrimModInstallationManager
+from management_engine import SkyrimModManager
 
 from applogger import ModiLogger
 log = ModiLogger()
 
-_mod_manager = SkyrimModInstallationManager()
+_mod_manager = SkyrimModManager()
 
 class ModManagerClient(object):
 

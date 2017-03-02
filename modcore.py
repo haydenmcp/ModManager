@@ -8,6 +8,7 @@ class ModPackage(object):
     def mods(self):
         return frozenset()
 
+
 class ModBase(object):
 
     def install_directory(self):

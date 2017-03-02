@@ -7,8 +7,8 @@ from applogger import ModiLogger
 log = ModiLogger()
 
 import appconfig
-import modbase
-from modbase import ModBase
+import modcore
+from modcore import ModBase
 import management_engine
 import os
 from singleton import Singleton
@@ -32,81 +32,58 @@ class OptimizedVanillaTextures(SkyrimMod):
         if os.path.exists(install_script):
             subprocess.call(["cscript.exe", install_script])
 
-
 @Singleton
 class UnofficialHighResolutionPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, OptimizedVanillaTextures()),)
-
+        return (modcore.Dependency(self, OptimizedVanillaTextures.Instance()),)
 
 @Singleton
 class UnofficialSkyrimPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, UnofficialHighResolutionPatch()),)
-
+        return (modcore.Dependency(self, UnofficialHighResolutionPatch.Instance()),)
 
 @Singleton
 class UnofficialSkyrimLegendaryEditionPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, UnofficialHighResolutionPatch()),)
-
+        return (modcore.Dependency(self, UnofficialHighResolutionPatch.Instance()),)
 
 @Singleton
 class StaticMeshImprovementMod(SkyrimMod):
-    # TODO: This can have a dependency on either Unofficial Skyrim Patch or
-    # TODO: UnofficialSkyrimLegendaryEditionPatch. How to resolve?
-    def dependencies(self):
-        return (modbase.Dependency(self, UnofficialSkyrimPatch()),)
-
+    pass
 
 @Singleton
 class RuinsClutterImproved(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, StaticMeshImprovementMod()),)
-
+    pass
 
 @Singleton
 class AlternateStart(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RuinsClutterImproved()),)
-
+    pass
 
 @Singleton
 class CinematicFireEffects(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, AlternateStart()),)
-
+    pass
 
 @Singleton
 class HDEnhancedTerrain(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, CinematicFireEffects()),)
-
+    pass
 
 @Singleton
 class SkyrimDistanceOverhaul(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, HDEnhancedTerrain()),)
-
+    pass
 
 @Singleton
 class SkyrimDistanceOverhaulSkymillsPatch(SkyrimMod):
-    # TODO: Patches should be a part of main mod. How to resolve?
     def dependencies(self):
-        return (modbase.Dependency(self, SkyrimDistanceOverhaul()),)
-
+        return (modcore.Dependency(self, SkyrimDistanceOverhaul.Instance()),)
 
 @Singleton
 class AnimatedDistantWaterfallsAndWindmills(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, SkyrimDistanceOverhaulSkymillsPatch()),)
-
+    def patches(self):
+        return (modcore.Patch(self, SkyrimDistanceOverhaulSkymillsPatch.Instance(), SkyrimDistanceOverhaul.Instance()))
 
 @Singleton
 class SkyrimHDFullVersion(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, AnimatedDistantWaterfallsAndWindmills()),)
-
+    pass
 
 @Singleton
 class SkyrimCityBeautificationAllInOneByJK(SkyrimMod):
@@ -118,310 +95,239 @@ class SkyrimCityBeautificationAllInOneByJK(SkyrimMod):
 
 @Singleton
 class VividLandscapesDungeonsAndRuins(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, SkyrimHDFullVersion()),)
+
+    def patches(self):
+        return (modcore.Patch(self, VividLandscapesDungeonsAndRuinsSMIMPatch.Instance(),
+                              StaticMeshImprovementMod.Instance()))
 
     # TODO: Move to configuration function?
     def run_post_processing(self):
         upsert_configuration(r"SkyrimPrefs.ini", {"bDeferredShadows": 1})
         upsert_configuration(r"enblocal.ini", {"FixParallaxBugs": True})
 
-
 @Singleton
 class VividLandscapesDungeonsAndRuinsSMIMPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesDungeonsAndRuins()),)
-
+        return (modcore.Dependency(self, VividLandscapesDungeonsAndRuins.Instance()),)
 
 @Singleton
 class VividLandscapesVolcanicArea(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesDungeonsAndRuinsSMIMPatch()),)
-
+    pass
 
 @Singleton
 class AMidianBornCavesAndMines2k(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesVolcanicArea()),)
-
+    pass
 
 @Singleton
 class ImmersiveRoads(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, AMidianBornCavesAndMines2k()),)
 
     def run_post_processing(self):
         upsert_configuration(r"enblocal.ini", {"FixParallaxBugs": True})
 
-
 @Singleton
-class ImmersiveRoadsSnowShinePatch(SkyrimMod):
+class ImmersiveRoadsReduceSnowShineTo40Percent(SkyrimMod):
     # TODO: May not need this. Snow too dark.
-    def apply(self):
-        extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
-
+    def dependencies(self):
+        return (modcore.Dependency(self, ImmersiveRoads.Instance()))
 
 @Singleton
 class SkyrimFloraOverhaul(SkyrimMod):
-    # TODO: Patch above isn't used. If desired, this dependency needs to be updated.
-    def dependencies(self):
-        return (modbase.Dependency(self, ImmersiveRoads()),)
-
+    pass
 
 @Singleton
 class SkyrimFloraOverhaulTallPines(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, SkyrimFloraOverhaul()),)
-
+        return (modcore.Dependency(self, SkyrimFloraOverhaul.Instance()),)
 
 @Singleton
 class TreesHD(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, SkyrimFloraOverhaulTallPines()),)
-
+    pass
 
 @Singleton
 class SimplyBiggerTrees(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, TreesHD()),)
-
+    pass
 
 @Singleton
 class SimplyBiggerTreesSlowerBranches(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, SimplyBiggerTrees()),)
-
+        return (modcore.Dependency(self, SimplyBiggerTrees.Instance()),)
 
 @Singleton
 class ParallaxTreebark4K(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, SimplyBiggerTreesSlowerBranches()),)
-
+    def patches(self):
+        return (modcore.Patch(self, ParallaxTreebark4KSimplyBiggerTreesPatch.Instance(), SimplyBiggerTrees.Instance()))
 
 @Singleton
 class ParallaxTreebark4KSimplyBiggerTreesPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ParallaxTreebark4K()),)
-
+        return (modcore.Dependency(self, ParallaxTreebark4K.Instance()),)
 
 @Singleton
 class ImmersiveFallenTrees(SkyrimMod):
-    # TODO: This dependency is purely for flow of install. Clearly this isn't a
-    # TODO: dependency of this mod. Need to redesign.
-    def dependencies(self):
-        return (modbase.Dependency(self, ParallaxTreebark4KSimplyBiggerTreesPatch()),)
-
+    pass
 
 @Singleton
 class FencesOfSkyrim(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, ImmersiveFallenTrees()),)
-
+    pass
 
 @Singleton
 class RusticWindows2K(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, FencesOfSkyrim()),)
-
+    pass
 
 @Singleton
 class VerdantGrassPlugin(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RusticWindows2K()),)
-
     def run_post_processing(self):
         upsert_configuration(r"Skyrim.ini", {"iMaxGrassTypesPerTexure": 15})  # TODO: Add [Grass] section
         upsert_configuration(r"Skyrim.ini", {"iMinGrassSize": 60})
 
-
 @Singleton
 class VerdantGrassPluginDarkGrassTextureOption(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, VerdantGrassPlugin()),)
-
+        return (modcore.Dependency(self, VerdantGrassPlugin.Instance()),)
 
 @Singleton
 class NaturalGrassTextureFloor(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, VerdantGrassPluginDarkGrassTextureOption()),)
-
+    pass
 
 @Singleton
 class RealVisionFloraPatch(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, NaturalGrassTextureFloor()),)
-
+    pass
 
 @Singleton
 class HighDefinitionIvy2K(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RealVisionFloraPatch()),)
-
+    pass
 
 @Singleton
 class DetailedRugs(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, HighDefinitionIvy2K()),)
-
+    pass
 
 @Singleton
 class PureWatersLegendaryEdition(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, DetailedRugs()),)
-
+    pass
 
 @Singleton
 class PureWatersLandscapeTextures(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, PureWatersLegendaryEdition()),)
-
+    pass
 
 @Singleton
 class VividLandscapesRockingStonesParallax(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, PureWatersLandscapeTextures()),)
-
+    pass
 
 @Singleton
 class VividLandscapesCliffsAndCreeks(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesRockingStonesParallax()),)
-
+    def patches(self):
+        return (modcore.Patch(self, VividLandscapesRockingStonesCompatibilityPatch.Instance()),
+                VividLandscapesRockingStonesParallax.Instance())
 
 @Singleton
 class VividLandscapesRockingStonesCompatibilityPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesCliffsAndCreeks()),)
-
+        return (modcore.Dependency(self, VividLandscapesRockingStonesParallax.Instance()),)
 
 @Singleton
 class VividLandscapesTundraMossRevisited(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesRockingStonesCompatibilityPatch()),)
-
+    def patches(self):
+        return (modcore.Patch(self, VividLandscapesTundraSMIMPatch.Instance(), StaticMeshImprovementMod.Instance()),
+                modcore.Patch(self, VividLandscapesTundraMossMountainPatch.Instance(),
+                              VividLandscapesRockingStonesParallax.Instance()))
 
 @Singleton
 class VividLandscapesTundraSMIMPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesTundraMossRevisited()),)
-
+        return (modcore.Dependency(self, VividLandscapesTundraMossRevisited.Instance()),
+                modcore.Dependency(self, StaticMeshImprovementMod.Instance()),)
 
 @Singleton
 class VividLandscapesTundraMossMountainPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesTundraSMIMPatch()),)
-
+        return (modcore.Dependency(self, VividLandscapesRockingStonesParallax.Instance()),)
 
 @Singleton
 class FinerDust(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, VividLandscapesTundraMossMountainPatch()),)
-
+    pass
 
 @Singleton
 class RealisticSmokeAndEmbers(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, FinerDust()),)
-
+    pass
 
 @Singleton
 class ParticlePatchForENB(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, RealisticSmokeAndEmbers()),
-                modbase.Superiority(self, StaticMeshImprovementMod()))
-
+        return (modcore.Superiority(self, StaticMeshImprovementMod.Instance()))
 
 @Singleton
 class SubsurfaceScatteringPatchForENB(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ParticlePatchForENB()),
-                modbase.Superiority(self, StaticMeshImprovementMod()))
-
+        return (modcore.Superiority(self, StaticMeshImprovementMod.Instance()))
 
 @Singleton
 class ParallaxTerrain4K(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, SubsurfaceScatteringPatchForENB()),)
-
+    pass
 
 @Singleton
 class CoastBeachTexturesForParallax(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, ParallaxTerrain4K()),)
-
+    pass
 
 @Singleton
 class PineForestTexturesForParallax(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, CoastBeachTexturesForParallax()),)
-
+    pass
 
 @Singleton
 class ClimatesOfTamriel(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, PineForestTexturesForParallax()),)
-
+    pass
 
 @Singleton
 class ClimatesOfTamrielSupremeStorms(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ClimatesOfTamriel()),)
-
+        return (modcore.Dependency(self, ClimatesOfTamriel.Instance()),)
 
 @Singleton
 class ClimatesOfTamrielWeatherPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ClimatesOfTamrielSupremeStorms()),)
-
+        return (modcore.Dependency(self, ClimatesOfTamrielSupremeStorms()),)
 
 @Singleton
 class TrueStorms(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, ClimatesOfTamrielWeatherPatch()),)
-
+    pass
 
 @Singleton
 class RealisticLightingOverhaul(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, TrueStorms()),)
-
+    pass
 
 @Singleton
 class LanternsOfSkyrim(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RealisticLightingOverhaul()),)
-
+    pass
 
 # TODO: Separate Enb out from Skyrim-specific mod
 @Singleton
 class EnbSeriesV308(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, LanternsOfSkyrim()),)
-
+    pass
 
 @Singleton
 class RealVisionENB(SkyrimMod):
-    # def apply(self):
-    #     # TODO: After this extraction runs, need to run installer for realvision.
-    #     # TODO: Make specified file modification under RealVision ENB manual install.
-    #     extract_to_skyrim_b
-    # ase_folder(compressed_file(self.__class__.__name__))
 
     # TODO: Use realvision auto-installer after extraction. currently, file modifications don't take place.
-    def run_post_processing(self):
-        log.info("Running 'Textures Install.vbs'")
-        install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIRECTORY)
-        if os.path.exists(install_script):
-            subprocess.call(["cscript.exe", install_script])
+    # def run_post_processing(self):
+    #     log.info("Running 'Textures Install.vbs'")
+    #     install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIRECTORY)
+    #     if os.path.exists(install_script):
+    #         subprocess.call(["cscript.exe", install_script])
+
+    def patches(self):
+        return (modcore.Patch(self, RealVisionFloraPatch.Instance(), RealVisionENB.Instance()),
+                modcore.Patch(self, ClimatesOfTamrielWeatherPatch.Instance(), ClimatesOfTamriel.Instance()))
+
+    def install_directory(self):
+        return appconfig.STEAM_SKYRIM_DIRECTORY
 
     def dependencies(self):
-        return (modbase.Dependency(self, EnbSeriesV308()),)
+        return (modcore.Dependency(self, EnbSeriesV308()),)
 
 
 @Singleton
 class RealVisionFloraPatch(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, RealVisionENB()),)
+        return (modcore.Dependency(self, RealVisionENB.Instance()),)
 
 
 ###############################################################################
@@ -429,96 +335,74 @@ class RealVisionFloraPatch(SkyrimMod):
 ###############################################################################
 @Singleton
 class ShowRaceMenuPrecacheKiller(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RealVisionFloraPatch()),)
-
+    pass
 
 @Singleton
 class XeniusCharacterEnhancementFull(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, ShowRaceMenuPrecacheKiller()),)
-
+    pass
 
 @Singleton
 class ApachiiSkyHairFull(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, XeniusCharacterEnhancementFull()),)
-
+    pass
 
 @Singleton
 class ApachiiSkyHairFemale(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ApachiiSkyHairFull()),)
-
+        return (modcore.Dependency(self, ApachiiSkyHairFull.Instance()),)
 
 @Singleton
 class ApachiiSkyHairMale(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ApachiiSkyHairFemale()),)
-
+        return (modcore.Dependency(self, ApachiiSkyHairFull.Instance()),)
 
 @Singleton
 class ApachiiSkyHairNaturalRetexture(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, ApachiiSkyHairMale()),)
-
+        return (modcore.Dependency(self, ApachiiSkyHairFull.Instance()),)
 
 @Singleton
 class DimonizedUNPFemaleBody(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, ApachiiSkyHairNaturalRetexture()),)
-
+    pass
 
 @Singleton
 class AllInOneFacePackUNP(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, DimonizedUNPFemaleBody()),)
-
+        return (modcore.Dependency(self, DimonizedUNPFemaleBody.Instance()),)
 
 @Singleton
 class RealGirlsRealisticBodyTextureUNP(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, AllInOneFacePackUNP()),)
-
+        return (modcore.Dependency(self, DimonizedUNPFemaleBody.Instance()),)
 
 @Singleton
 class BetterMalesFace(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RealGirlsRealisticBodyTextureUNP()),)
-
+    pass
 
 @Singleton
 class BetterMalesBody(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, BetterMalesFace()),)
-
+        return (modcore.Dependency(self, BetterMalesFace.Instance()),)
 
 @Singleton
 class HighDefinitionTeeth(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, BetterMalesBody()),)
+    pass
 
-
+# @Singleton
 # class SkySightSkinsHDMaleTextures(SkyrimMod):
-#     def relationships(self):
-#         return (modbase.Dependency(self, HighDefinitionTeeth()),)
+#     pass
+
 @Singleton
 class EyesOfBeauty(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, HighDefinitionTeeth()),)
-
+    pass
 
 @Singleton
 class EyesOfBeautyNPC(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, EyesOfBeauty()),)
-
+        return (modcore.Dependency(self, EyesOfBeauty.Instance()),)
 
 @Singleton
 class RealisticRagdollsAndForce(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, EyesOfBeautyNPC()),)
-
+    pass
 
 # class EnhancedCharacterEdit(SkyrimMod):
 #     def apply(self):
@@ -529,68 +413,50 @@ class RealisticRagdollsAndForce(SkyrimMod):
 ###############################################################################
 @Singleton
 class SkyUI5(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RealisticRagdollsAndForce()),)
-
+    pass
 
 @Singleton
 class InterestingNPCs(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, SkyUI5()),)
-
+    pass
 
 @Singleton
 class WetAndColdRegularEdition(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, InterestingNPCs()),)
-
+    pass
 
 @Singleton
 class WetAndColdAshes(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, WetAndColdRegularEdition()),)
-
+        return (modcore.Dependency(self, WetAndColdRegularEdition.Instance()),)
 
 @Singleton
 class CompleteCampingSystem(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, WetAndColdAshes()),)
-
+    pass
 
 @Singleton
 class Tentapalooza(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, CompleteCampingSystem()),)
-
+        return (modcore.Dependency(self, CompleteCampingSystem.Instance()),)
 
 @Singleton
 class FrostfallSurvival(SkyrimMod):
     def dependencies(self):
-        return (modbase.Dependency(self, Tentapalooza()),)
-
+        return (modcore.Dependency(self, CompleteCampingSystem.Instance()),)
 
 @Singleton
 class RealisticNeedsAndDiseases(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, FrostfallSurvival()),)
-
+    pass
 
 @Singleton
 class ImmersivePatrols(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, RealisticNeedsAndDiseases()),)
-
+    pass
 
 @Singleton
 class TouringCarriages(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, ImmersivePatrols()),)
-
+    pass
 
 @Singleton
 class LanternsOfSkyrim(SkyrimMod):
-    def dependencies(self):
-        return (modbase.Dependency(self, TouringCarriages()),)
+    pass
 
 
 ###############################################################################
