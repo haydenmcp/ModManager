@@ -47,15 +47,17 @@ class SkyrimModManager(ModManager):
         if is_populated(mods):
             for mod in mods:
                 if is_valid_mod(mod):
-                    if self.is_install_pending(mod):
+                    if self.install_is_pending(mod):
                         self._handle_dependencies(mod.dependencies())
                         self._handle_superiorities(mod.superiorities())
                         self._install_mod(mod)
                         self._handle_patches(mod.patches())
-                        log.info("Installation Successful: {0}".format(mod.__class__.__name__))
                     else:
                         log.debug("Mod Already Installed: {0}".format(mod.__class__.__name__))
 
+    # TODO: This method cant be called directly. If done that way, dependency resolution
+    # TODO: occurs out of order because dependency install is direct vs. going through
+    # TODO: recursive dependency resolution on those dependencies. Modify?
     def _install_mod(self, mod):
         if is_valid_mod(mod):
             log.info("Installing mod: {0}".format(mod.__class__.__name__))
@@ -69,12 +71,13 @@ class SkyrimModManager(ModManager):
                         archive.extract(file, install_dir)
             mod.run_post_processing()
             self._update_installation_status(mod, InstallStatus.COMPLETE)
+            log.info("Installation Successful: {0}".format(mod.__class__.__name__))
 
     def _handle_dependencies(self, dependencies):
         if is_populated(dependencies):
             for dependency in dependencies:
                 if is_valid_dependency(dependency):
-                    self._install_mod(dependency.target_mod)
+                    self._install_mods([dependency.target_mod])
 
     def _handle_patches(self, patches):
         if is_populated(patches):
@@ -82,7 +85,7 @@ class SkyrimModManager(ModManager):
                 if is_valid_patch(patch):
                     mod_to_patch_if_found = patch.patch_dependency
                     if self._is_registered(mod_to_patch_if_found):
-                        self._install_mod(patch.patch_mod)
+                        self._install_mods([patch.patch_mod])
 
     def _handle_superiorities(self, superiorities):
         if is_populated(superiorities):
@@ -140,7 +143,7 @@ class SkyrimModManager(ModManager):
         if is_valid_mod(mod) and isinstance(status, InstallStatus):
             self._mod_installation_status[mod] = status
 
-    def is_install_pending(self, mod):
+    def install_is_pending(self, mod):
         if is_valid_mod(mod):
             return self._mod_installation_status[mod] == InstallStatus.PENDING
 

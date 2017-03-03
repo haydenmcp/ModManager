@@ -6,7 +6,7 @@ class SkyrimModPackage(ModPackage):
 
 class FoundationPatchPack(SkyrimModPackage):
     def mods(self):
-        return frozenset([
+        return ([
             skyrim_mods.UnofficialHighResolutionPatch.Instance(),
             skyrim_mods.UnofficialSkyrimPatch.Instance(),
             # skyrim_mods.UnofficialSkyrimLegendaryEditionPatch.Instance(),
@@ -19,7 +19,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
 
     # todo; remove environmental enhancements from high res pack. Enhancements should be separate.
     def mods(self):
-        return frozenset([
+        return ([
             skyrim_mods.RuinsClutterImproved.Instance(),
             skyrim_mods.AlternateStart.Instance(),
             skyrim_mods.CinematicFireEffects.Instance(),
@@ -93,7 +93,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
-        return frozenset([
+        return ([
             skyrim_mods.InterestingNPCs.Instance(),
             skyrim_mods.WetAndColdRegularEdition.Instance(),
             skyrim_mods.WetAndColdAshes.Instance(),
