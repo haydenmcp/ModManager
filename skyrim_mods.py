@@ -301,7 +301,8 @@ class LanternsOfSkyrim(SkyrimMod):
 # TODO: Separate Enb out from Skyrim-specific mod
 @Singleton
 class EnbSeriesV308(SkyrimMod):
-    pass
+    def install_directory(self):
+        return appconfig.STEAM_SKYRIM_DIRECTORY
 
 @Singleton
 class RealVisionENB(SkyrimMod):
