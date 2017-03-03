@@ -307,18 +307,14 @@ class EnbSeriesV308(SkyrimMod):
 class RealVisionENB(SkyrimMod):
 
     # TODO: Use realvision auto-installer after extraction. currently, file modifications don't take place.
-    # def run_post_processing(self):
-    #     log.info("Running 'Textures Install.vbs'")
-    #     install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIRECTORY)
-    #     if os.path.exists(install_script):
-    #         subprocess.call(["cscript.exe", install_script])
+    def run_post_processing(self):
+        log.info("Running 'RV_launcher.exe'")
+        install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIRECTORY)
+        if os.path.exists(install_script):
+            subprocess.call([install_script])
 
     def patches(self):
-        return (modcore.Patch(self, RealVisionFloraPatch.Instance(), RealVisionENB.Instance()),
-                modcore.Patch(self, ClimatesOfTamrielWeatherPatch.Instance(), ClimatesOfTamriel.Instance()))
-
-    def install_directory(self):
-        return appconfig.STEAM_SKYRIM_DIRECTORY
+        return (modcore.Patch(self, RealVisionFloraPatch.Instance(), RealVisionENB.Instance()),)
 
     def dependencies(self):
         return (modcore.Dependency(self, EnbSeriesV308.Instance()),)

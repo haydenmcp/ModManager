@@ -21,7 +21,6 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
     def mods(self):
         return (
             skyrim_mods.RuinsClutterImproved.Instance(),
-            skyrim_mods.AlternateStart.Instance(),
             skyrim_mods.CinematicFireEffects.Instance(),
             skyrim_mods.HDEnhancedTerrain.Instance(),
             skyrim_mods.SkyrimDistanceOverhaul.Instance(),
@@ -94,6 +93,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
         return (
+            skyrim_mods.AlternateStart.Instance(),
             skyrim_mods.InterestingNPCs.Instance(),
             skyrim_mods.WetAndColdRegularEdition.Instance(),
             skyrim_mods.WetAndColdAshes.Instance(),
