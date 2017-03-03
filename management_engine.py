@@ -93,10 +93,13 @@ class SkyrimModManager(ModManager):
                 if is_valid_superiority(superiority):
                     superior_mod = superiority.target_mod
                     inferior_mod = superiority.source_mod
-                    log.info("Configuring superiority of mod: {0}".format(superior_mod.__class__.__name__))
+                    log.debug("Configuring superiority of mod: {0}".format(superior_mod.__class__.__name__))
                     files_to_avoid = self._registered_file_modifications[superior_mod]
+                    log.debug("Superior files: {0}".format(files_to_avoid))
                     inferior_mod_files = self._registered_file_modifications[inferior_mod]
+                    log.debug("Inferior files: {0}".format(inferior_mod_files))
                     updated_files_to_modify = set_difference_zipinfos(inferior_mod_files, files_to_avoid)
+                    log.debug("Updated inferior files: {0}".format(updated_files_to_modify))
                     self._update_file_modifications(inferior_mod, updated_files_to_modify)
 
     def _map_package_relationships(self, mod_packages):
@@ -133,7 +136,7 @@ class SkyrimModManager(ModManager):
             self._update_installation_status(mod, InstallStatus.PENDING)
 
     def _update_file_modifications(self, mod, zipinfos):
-        if is_valid_mod(mod) and is_populated(zipinfos) and isinstance(zipinfos[0], ZipInfo):
+        if is_valid_mod(mod): # Do NOT check zero case for zipinfos. Mods files "to add" can be empty list.
             self._registered_file_modifications[mod] = zipinfos
 
     def _is_registered(self, mod):
