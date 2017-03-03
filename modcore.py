@@ -6,7 +6,7 @@
 class ModPackage(object):
 
     def mods(self):
-        return frozenset()
+        return tuple()
 
 
 class ModBase(object):
@@ -17,16 +17,16 @@ class ModBase(object):
     def dependencies(self):
         '''Mods declared in this collection represent dependencies which must be installed for
         this mod to be included.'''
-        return list()
+        return tuple()
 
     def superiorities(self):
         '''Mods declared in this collection are viewed as superior meaning that superior mod
         files will not be overwritten by this mods files.'''
-        return frozenset()
+        return tuple()
 
     def patches(self):
         '''Patch dependencies are declared in this collection.'''
-        return frozenset()
+        return tuple()
 
     def run_post_processing(self):
         '''Processing that needs to occur after installation should be placed here'''

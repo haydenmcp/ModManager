@@ -6,20 +6,20 @@ class SkyrimModPackage(ModPackage):
 
 class FoundationPatchPack(SkyrimModPackage):
     def mods(self):
-        return ([
+        return (
             skyrim_mods.UnofficialHighResolutionPatch.Instance(),
             skyrim_mods.UnofficialSkyrimPatch.Instance(),
             # skyrim_mods.UnofficialSkyrimLegendaryEditionPatch.Instance(),
             skyrim_mods.OptimizedVanillaTextures.Instance(),
             skyrim_mods.StaticMeshImprovementMod.Instance(),
             skyrim_mods.SkyUI5.Instance(),
-        ])
+        )
 
 class RealisticWorldWithRealVisionENB(SkyrimModPackage):
 
     # todo; remove environmental enhancements from high res pack. Enhancements should be separate.
     def mods(self):
-        return ([
+        return (
             skyrim_mods.RuinsClutterImproved.Instance(),
             skyrim_mods.AlternateStart.Instance(),
             skyrim_mods.CinematicFireEffects.Instance(),
@@ -89,11 +89,11 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.EyesOfBeautyNPC.Instance(),
             skyrim_mods.HighDefinitionTeeth.Instance(),
             skyrim_mods.RealisticRagdollsAndForce.Instance(),
-        ])
+        )
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
-        return ([
+        return (
             skyrim_mods.InterestingNPCs.Instance(),
             skyrim_mods.WetAndColdRegularEdition.Instance(),
             skyrim_mods.WetAndColdAshes.Instance(),
@@ -103,7 +103,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.RealisticNeedsAndDiseases.Instance(),
             skyrim_mods.ImmersivePatrols.Instance(),
             skyrim_mods.TouringCarriages.Instance(),
-        ])
+        )
 
     # TODO: Order of mods here is important. Make sure to update such that incompatibility,
     # TODO: dependencies, etc are intelligently resolved by application (order shouldn't matter

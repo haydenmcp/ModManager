@@ -79,7 +79,7 @@ class SkyrimDistanceOverhaulSkymillsPatch(SkyrimMod):
 @Singleton
 class AnimatedDistantWaterfallsAndWindmills(SkyrimMod):
     def patches(self):
-        return (modcore.Patch(self, SkyrimDistanceOverhaulSkymillsPatch.Instance(), SkyrimDistanceOverhaul.Instance()))
+        return (modcore.Patch(self, SkyrimDistanceOverhaulSkymillsPatch.Instance(), SkyrimDistanceOverhaul.Instance()),)
 
 @Singleton
 class SkyrimHDFullVersion(SkyrimMod):
@@ -98,7 +98,7 @@ class VividLandscapesDungeonsAndRuins(SkyrimMod):
 
     def patches(self):
         return (modcore.Patch(self, VividLandscapesDungeonsAndRuinsSMIMPatch.Instance(),
-                              StaticMeshImprovementMod.Instance()))
+                              StaticMeshImprovementMod.Instance()),)
 
     # TODO: Move to configuration function?
     def run_post_processing(self):
@@ -128,7 +128,7 @@ class ImmersiveRoads(SkyrimMod):
 class ImmersiveRoadsReduceSnowShineTo40Percent(SkyrimMod):
     # TODO: May not need this. Snow too dark.
     def dependencies(self):
-        return (modcore.Dependency(self, ImmersiveRoads.Instance()))
+        return (modcore.Dependency(self, ImmersiveRoads.Instance()),)
 
 @Singleton
 class SkyrimFloraOverhaul(SkyrimMod):
@@ -155,7 +155,7 @@ class SimplyBiggerTreesSlowerBranches(SkyrimMod):
 @Singleton
 class ParallaxTreebark4K(SkyrimMod):
     def patches(self):
-        return (modcore.Patch(self, ParallaxTreebark4KSimplyBiggerTreesPatch.Instance(), SimplyBiggerTrees.Instance()))
+        return (modcore.Patch(self, ParallaxTreebark4KSimplyBiggerTreesPatch.Instance(), SimplyBiggerTrees.Instance()),)
 
 @Singleton
 class ParallaxTreebark4KSimplyBiggerTreesPatch(SkyrimMod):
@@ -216,8 +216,8 @@ class VividLandscapesRockingStonesParallax(SkyrimMod):
 @Singleton
 class VividLandscapesCliffsAndCreeks(SkyrimMod):
     def patches(self):
-        return (modcore.Patch(self, VividLandscapesRockingStonesCompatibilityPatch.Instance()),
-                VividLandscapesRockingStonesParallax.Instance())
+        return (modcore.Patch(self, VividLandscapesRockingStonesCompatibilityPatch.Instance(),
+                              VividLandscapesRockingStonesParallax.Instance()),)
 
 @Singleton
 class VividLandscapesRockingStonesCompatibilityPatch(SkyrimMod):
@@ -253,12 +253,12 @@ class RealisticSmokeAndEmbers(SkyrimMod):
 @Singleton
 class ParticlePatchForENB(SkyrimMod):
     def dependencies(self):
-        return (modcore.Superiority(self, StaticMeshImprovementMod.Instance()))
+        return (modcore.Superiority(self, StaticMeshImprovementMod.Instance()),)
 
 @Singleton
 class SubsurfaceScatteringPatchForENB(SkyrimMod):
     def dependencies(self):
-        return (modcore.Superiority(self, StaticMeshImprovementMod.Instance()))
+        return (modcore.Superiority(self, StaticMeshImprovementMod.Instance()),)
 
 @Singleton
 class ParallaxTerrain4K(SkyrimMod):
@@ -284,7 +284,7 @@ class ClimatesOfTamrielSupremeStorms(SkyrimMod):
 @Singleton
 class ClimatesOfTamrielWeatherPatch(SkyrimMod):
     def dependencies(self):
-        return (modcore.Dependency(self, ClimatesOfTamrielSupremeStorms()),)
+        return (modcore.Dependency(self, ClimatesOfTamrielSupremeStorms.Instance()),)
 
 @Singleton
 class TrueStorms(SkyrimMod):
@@ -321,7 +321,7 @@ class RealVisionENB(SkyrimMod):
         return appconfig.STEAM_SKYRIM_DIRECTORY
 
     def dependencies(self):
-        return (modcore.Dependency(self, EnbSeriesV308()),)
+        return (modcore.Dependency(self, EnbSeriesV308.Instance()),)
 
 
 @Singleton
