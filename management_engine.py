@@ -127,7 +127,7 @@ class SkyrimModManager(ModManager):
         if is_valid_mod(mod):
             for patch in mod.patches():
                 if is_valid_patch(patch):
-                    self._map_mod_relationships(patch.patch_mod)
+                    self._map_mod_relationships([patch.patch_mod])
 
     def _register_mod(self, mod):
         if is_valid_mod(mod):
