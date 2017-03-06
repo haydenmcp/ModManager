@@ -24,6 +24,9 @@ class ModBase(object):
         files will not be overwritten by this mods files.'''
         return tuple()
 
+    def configurations(self):
+        return dict()
+
     def patches(self):
         '''Patch dependencies are declared in this collection.'''
         return tuple()

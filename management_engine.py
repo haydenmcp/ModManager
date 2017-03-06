@@ -4,19 +4,19 @@
 #
 #   @author: Hayden McParlane
 ###############################################################################
+from applogger import ModManagementLogger
+
+log = ModManagementLogger()
+
 from common import *
+import configparser
 import enum
-from zipfile import ZipFile, ZipInfo
 import appconfig
 import copy
 import json
 import modcore
 import os
-
-# TODO: Add traceback to logging module. Shouldn't need to include this in every module with logging.
-import traceback
-from applogger import ModManagementLogger
-log = ModManagementLogger()
+from zipfile import ZipFile, ZipInfo
 
 
 class ModManager(object):
@@ -26,7 +26,6 @@ class ModManager(object):
     def install_mods(self, mods):
         raise NotImplementedError()
 
-
 ###############################################################################
 #   Skyrim
 ###############################################################################
@@ -35,7 +34,9 @@ class SkyrimModManager(ModManager):
         self._mod_installation_history = self._read_from_install_history()
         self._mod_installation_status = dict()
         self._registered_file_modifications = dict()
-        self._game_mod_dir = appconfig.SKYRIM_APP_MOD_DIRECTORY
+        self._game_mod_dir = appconfig.APP_MOD_DIR_SKYRIM
+        self._skyrim_ini_modifications = dict()
+        self._config_modifications = dict()
 
     def install_mod_packages(self, mod_packages):
         if is_populated(mod_packages):
@@ -43,6 +44,7 @@ class SkyrimModManager(ModManager):
             for mod_package in mod_packages:
                 if is_valid_package(mod_package):
                     self._install_mods(mod_package.mods())
+                    self._update_game_configurations()
                     self._write_to_install_history()
 
     def install_is_pending(self, mod):
@@ -66,6 +68,7 @@ class SkyrimModManager(ModManager):
                         self._handle_dependencies(mod.dependencies())
                         self._handle_superiorities(mod.superiorities())
                         self._install_mod(mod)
+                        self._handle_configurations(mod.configurations())
                         # TODO: *** Need to handle patches such that install of modA not requiring patch,
                         # TODO: followed by subsequent install of modB which suddenly requires that
                         # TODO: modA is patched, is possible. Currently, this would be recorded as
@@ -98,6 +101,11 @@ class SkyrimModManager(ModManager):
             for dependency in dependencies:
                 if is_valid_dependency(dependency):
                     self._install_mods([dependency.target_mod])
+
+    def _handle_configurations(self, configurations):
+        if is_populated(configurations):
+            for filename, config_updates in configurations.items():
+                self._add_config_modification(filename, config_updates)
 
     def _handle_patches(self, patches):
         if is_populated(patches):
@@ -157,7 +165,7 @@ class SkyrimModManager(ModManager):
             self._update_installation_status(mod, InstallStatus.PENDING)
 
     def _update_file_modifications(self, mod, zipinfos):
-        if is_valid_mod(mod): # Do NOT check zero case for zipinfos. Mods files "to add" can be empty list.
+        if is_valid_mod(mod):  # Do NOT check zero case for zipinfos. Mods files "to add" can be empty list.
             self._registered_file_modifications[mod] = zipinfos
 
     def _is_registered(self, mod):
@@ -174,13 +182,13 @@ class SkyrimModManager(ModManager):
             with open(appconfig.INSTALLED_MODS_CONFIG_FILE, 'w') as installed_mods_config_file:
                 json.dump(self._mod_installation_history, installed_mods_config_file)
         except Exception:
-            log.error("Failed to write installed mods to: {0}\n\t{1}".format(appconfig.INSTALLED_MODS_CONFIG_FILE,
-                                                                             traceback.format_exc()))
+            log.error("Failed to write installed mods to: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
 
     def _read_from_install_history(self):
         configurations = dict()
         try:
-            log.info(r"Reading currently installed mods from config file: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
+            log.info(
+                r"Reading currently installed mods from config file: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
             with open(appconfig.INSTALLED_MODS_CONFIG_FILE, 'r') as installed_mods_config_file:
                 # TODO: Refactor such that more readable.
                 configurations = json.load(installed_mods_config_file)
@@ -196,10 +204,47 @@ class SkyrimModManager(ModManager):
         for mod_name, status_object in self._mod_installation_history.items():
             self._mod_installation_history[mod_name] = status_object.name
         for mod, status in self._mod_installation_status.items():
-            string_keyed_mod_dict[mod.__class__.__name__] = status.name
+            # TODO: May be better to represent status as separate dicts and to transfer mods
+            # TODO: from one to the other (i.e, pending -> complete dict). That way don't
+            # TODO: need to iterate over all mods every time history is updated.
+            if status is InstallStatus.COMPLETE:
+                string_keyed_mod_dict[mod.__class__.__name__] = status.name
         for mod_name, status_name in string_keyed_mod_dict.items():
             if mod_name not in self._mod_installation_history:
                 self._mod_installation_history[mod_name] = status_name
+
+    def _add_config_modification(self, filename, config_updates):
+        if is_populated(filename) and is_populated(config_updates):
+            if not self._has_config_updates(filename):
+                self._config_modifications[filename] = configparser.ConfigParser()
+            self._config_modifications[filename].read_dict(config_updates)
+
+    def _has_config_updates(self, filename):
+        if is_populated(filename):
+            return filename in self._config_modifications
+
+    def _update_game_configurations(self):
+        if is_populated(self._config_modifications):
+            for config_filename, config_modifications in self._config_modifications.items():
+                if is_populated(config_filename):
+                    current_configurations = config_file(config_filename)
+                    modified_configurations = self._merge_config_files(current_configurations, config_modifications)
+                    current_configurations.write(modified_configurations)
+
+    def _merge_config_files(self, current_config, config_updates):
+        merged_configurations = copy.deepcopy(current_config)
+        if isinstance(current_config, configparser.ConfigParser) and isinstance(config_updates, configparser.ConfigParser):
+            updated_sections = config_updates.sections()
+            for section in updated_sections:
+                if is_populated(section):
+                    if not current_config.has_section(section):
+                        current_config.add_section(section)
+                    for option, value in config_updates.items(section):
+                        if is_populated(option) and is_populated(value):
+                            current_config.set(section, option, value)
+        return merged_configurations
+
+
 
 ###############################################################################
 #   Helper functions
@@ -207,6 +252,7 @@ class SkyrimModManager(ModManager):
 class InstallStatus(enum.Enum):
     PENDING = "PENDING",
     COMPLETE = "COMPLETE"
+
 
 ###############################################################################
 #   Helper functions
@@ -273,3 +319,9 @@ def has_extension(filename):
         result = split_filename[1] not in ""
     return result
 
+
+def config_file(filename):
+    config = configparser.ConfigParser()
+    with open(filename) as file:
+        config.read_file(file)
+    return config

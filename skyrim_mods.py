@@ -18,7 +18,7 @@ from zipfile import ZipFile
 
 class SkyrimMod(ModBase):
     def install_directory(self):
-        return appconfig.SKYRIM_DATA_DIRECTORY
+        return appconfig.SKYRIM_DATA_DIR
 
 
 ###############################################################################
@@ -28,7 +28,7 @@ class SkyrimMod(ModBase):
 class OptimizedVanillaTextures(SkyrimMod):
     def run_post_processing(self):
         log.info("Running 'Textures Install.vbs'")
-        install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIRECTORY)
+        install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIR)
         if os.path.exists(install_script):
             subprocess.call(["cscript.exe", install_script])
 
@@ -100,10 +100,9 @@ class VividLandscapesDungeonsAndRuins(SkyrimMod):
         return (modcore.Patch(self, VividLandscapesDungeonsAndRuinsSMIMPatch.Instance(),
                               StaticMeshImprovementMod.Instance()),)
 
-    # TODO: Move to configuration function?
-    def run_post_processing(self):
-        upsert_configuration(r"SkyrimPrefs.ini", {"bDeferredShadows": 1})
-        upsert_configuration(r"enblocal.ini", {"FixParallaxBugs": True})
+    def configurations(self):
+        return {appconfig.SKYRIM_INI_FILE: {"Display": {"bDeferredShadows": 1}},
+                appconfig.SKYRIM_ENBLOCAL_INI_FILE: {"FIX": {"FixParallaxBugs": True}}}
 
 @Singleton
 class VividLandscapesDungeonsAndRuinsSMIMPatch(SkyrimMod):
@@ -121,8 +120,8 @@ class AMidianBornCavesAndMines2k(SkyrimMod):
 @Singleton
 class ImmersiveRoads(SkyrimMod):
 
-    def run_post_processing(self):
-        upsert_configuration(r"enblocal.ini", {"FixParallaxBugs": True})
+    def configurations(self):
+        return {appconfig.SKYRIM_ENBLOCAL_INI_FILE: {"FIX": {"FixParallaxBugs": True}},}
 
 @Singleton
 class ImmersiveRoadsReduceSnowShineTo40Percent(SkyrimMod):
@@ -176,9 +175,10 @@ class RusticWindows2K(SkyrimMod):
 
 @Singleton
 class VerdantGrassPlugin(SkyrimMod):
-    def run_post_processing(self):
-        upsert_configuration(r"Skyrim.ini", {"iMaxGrassTypesPerTexure": 15})  # TODO: Add [Grass] section
-        upsert_configuration(r"Skyrim.ini", {"iMinGrassSize": 60})
+
+    def configurations(self):
+        return {appconfig.SKYRIM_INI_FILE: {"Grass": {"iMaxGrassTypesPerTexure": 15}},
+                appconfig.SKYRIM_INI_FILE: {"Grass": {"iMinGrassSize": 60}},}
 
 @Singleton
 class VerdantGrassPluginDarkGrassTextureOption(SkyrimMod):
@@ -306,7 +306,7 @@ class BlacksmithWaterFix(SkyrimMod):
 @Singleton
 class EnbSeriesV308(SkyrimMod):
     def install_directory(self):
-        return appconfig.STEAM_SKYRIM_DIRECTORY
+        return appconfig.SKYRIM_BASE_DIR
 
 @Singleton
 class RealVisionENB(SkyrimMod):
@@ -314,7 +314,7 @@ class RealVisionENB(SkyrimMod):
     # TODO: Use realvision auto-installer after extraction. currently, file modifications don't take place.
     def run_post_processing(self):
         log.info("Running 'RV_launcher.exe'")
-        install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIRECTORY)
+        install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIR)
         if os.path.exists(install_script):
             subprocess.call([install_script])
 
@@ -616,26 +616,6 @@ class NetImmerseOverrideForSKSE(SkyrimMod):
 ###############################################################################
 # todo: Is this needed after modcore changes?
 def compressed_file(mod_name):
-    return management_engine.compressed_file(appconfig.SKYRIM_APP_MOD_DIRECTORY, mod_name)
+    return management_engine.compressed_file(appconfig.APP_MOD_DIR_SKYRIM, mod_name)
 
 
-def extract_to_skyrim_data_folder(zip_file_name):
-    log.info("Extracting Mod Contents to {0}".format(appconfig.SKYRIM_DATA_DIRECTORY))
-    with ZipFile(zip_file_name) as archive:
-        archive.extractall(appconfig.SKYRIM_DATA_DIRECTORY)
-
-
-def extract_to_skyrim_base_folder(zip_file_name):
-    log.info("Extracting Mod Contents to {0}".format(appconfig.STEAM_SKYRIM_DIRECTORY))
-    with ZipFile(zip_file_name) as archive:
-        archive.extractall(appconfig.STEAM_SKYRIM_DIRECTORY)
-
-
-_file_to_configuration_mappings = dict()
-
-
-def upsert_configuration(filename, configurations):
-    # This function should wait until all mods are installed and should track
-    # all needed changes to the files before actually reading in the file and
-    # making the changes. This'll really optimize the update process.
-    pass

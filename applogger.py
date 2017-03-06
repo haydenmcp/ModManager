@@ -4,6 +4,7 @@
 ###############################################################################
 
 import logging
+import traceback
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
@@ -19,6 +20,7 @@ class ModManagementLogger(object):
         logging.warning(msg)
 
     def error(self, msg):
+        msg = "{0}\n\t{1}".format(msg, traceback.format_exc())
         logging.error(msg)
 
     def critical(self, msg):

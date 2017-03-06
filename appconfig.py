@@ -2,19 +2,30 @@
 #   @description: Module containing mods for skyrim.
 #   @author: Hayden McParlane
 ###############################################################################
+import configparser
 import os
 
-TEMP_DIRECTORY = os.path.abspath(r".\tmp")
-APP_MOD_DIRECTORY = os.path.abspath(r".\games")
-APP_CONFIG_DIRECTORY = os.path.abspath(r".\configurations")
-SKYRIM_APP_MOD_DIRECTORY = r"{0}\{1}".format(APP_MOD_DIRECTORY, "skyrim")
-# SKYRIM_APP_MOD_DIRECTORY = r"C:\dev\personal\mods" # for laptop
+################################################################################
+#   Application Config
+################################################################################
+APP_MOD_DIR = os.path.abspath(r".\games")
+APP_CONFIG_DIR = os.path.abspath(r".\configurations")
+INSTALLED_MODS_CONFIG_FILE = r"{0}\{1}".format(APP_CONFIG_DIR, r"installed_mods.json")
 
-BASE_STEAM_GAME_DIRECTORY = r"C:\personal\programs\steam\steamapps\common"
-STEAM_SKYRIM_DIRECTORY = r"{0}\{1}".format(BASE_STEAM_GAME_DIRECTORY, "skyrim")
-# STEAM_SKYRIM_DIRECTORY = r"C:\Users\hayde\Documents\tmp\skyrim"
+APP_MOD_DIR_SKYRIM = r"{0}\{1}".format(APP_MOD_DIR, "skyrim")
 
-SKYRIM_DATA_DIRECTORY = r"{0}\{1}".format(STEAM_SKYRIM_DIRECTORY, "data")
-# SKYRIM_DATA_DIRECTORY = os.path.abspath(r"C:\dev\personal\mods\tmp") # for laptop
+################################################################################
+#   Steam Config
+################################################################################
+STEAM_BASE_GAME_DIRECTORY = r"C:\personal\programs\steam\steamapps\common"
+STEAM_GAME_CONFIG_DIR = r"C:\Users\hayde\Documents\My Games"
 
-INSTALLED_MODS_CONFIG_FILE = r"{0}\{1}".format(APP_CONFIG_DIRECTORY, r"installed_mods.json")
+################################################################################
+#   Skyrim Config
+################################################################################
+SKYRIM_BASE_DIR = r"{0}\{1}".format(STEAM_BASE_GAME_DIRECTORY, "skyrim")
+SKYRIM_DATA_DIR = r"{0}\{1}".format(SKYRIM_BASE_DIR, "data")
+SKYRIM_GAME_CONFIG_DIR = r"{0}\{1}".format(STEAM_GAME_CONFIG_DIR, "skyrim")
+SKYRIM_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Skyrim.ini")
+SKYRIM_PREFS_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "SkyrimPrefs.ini")
+SKYRIM_ENBLOCAL_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "enblocal.ini")
