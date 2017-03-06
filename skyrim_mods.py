@@ -610,6 +610,19 @@ class NetImmerseOverrideForSKSE(SkyrimMod):
         # TODO: add run of GenerateFNISforUsers?
         pass
 
+###############################################################################
+#   Test mods
+###############################################################################
+@Singleton
+class TestMod1(SkyrimMod):
+    def configurations(self):
+        return {appconfig.TEST_CONFIG_INI_FILE: {"Animal": {"active": 0}},
+                appconfig.TEST_CONFIG_INI_FILE: {"Animal": {"cute": 1}},}
+
+@Singleton
+class TestMod2(SkyrimMod):
+    def configurations(self):
+        return {appconfig.TEST_CONFIG_INI_FILE: {"Animal": {"fuzzy": 0}},}
 
 ###############################################################################
 #   Helper functions

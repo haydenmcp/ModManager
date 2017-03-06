@@ -26,6 +26,14 @@ STEAM_GAME_CONFIG_DIR = r"C:\Users\hayde\Documents\My Games"
 SKYRIM_BASE_DIR = r"{0}\{1}".format(STEAM_BASE_GAME_DIRECTORY, "skyrim")
 SKYRIM_DATA_DIR = r"{0}\{1}".format(SKYRIM_BASE_DIR, "data")
 SKYRIM_GAME_CONFIG_DIR = r"{0}\{1}".format(STEAM_GAME_CONFIG_DIR, "skyrim")
+
 SKYRIM_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Skyrim.ini")
 SKYRIM_PREFS_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "SkyrimPrefs.ini")
 SKYRIM_ENBLOCAL_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "enblocal.ini")
+
+################################################################################
+#   Test Config
+################################################################################
+APP_MOD_DIR_SKYRIM = r"C:\personal\gaming\nmm\mods"
+SKYRIM_DATA_DIR = r"C:\personal\gaming\nmm\mods\after_install"
+TEST_CONFIG_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Goat.ini")

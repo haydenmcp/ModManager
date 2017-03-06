@@ -35,7 +35,6 @@ class SkyrimModManager(ModManager):
         self._mod_installation_status = dict()
         self._registered_file_modifications = dict()
         self._game_mod_dir = appconfig.APP_MOD_DIR_SKYRIM
-        self._skyrim_ini_modifications = dict()
         self._config_modifications = dict()
 
     def install_mod_packages(self, mod_packages):
@@ -45,7 +44,7 @@ class SkyrimModManager(ModManager):
                 if is_valid_package(mod_package):
                     self._install_mods(mod_package.mods())
                     self._update_game_configurations()
-                    self._write_to_install_history()
+            self._record_activity_in_install_history()
 
     def install_is_pending(self, mod):
         if is_valid_mod(mod):
@@ -175,7 +174,7 @@ class SkyrimModManager(ModManager):
         if is_valid_mod(mod) and isinstance(status, InstallStatus):
             self._mod_installation_status[mod] = status
 
-    def _write_to_install_history(self):
+    def _record_activity_in_install_history(self):
         try:
             log.info(r"Writing installed mods to config file: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
             self._update_installation_history()
@@ -229,10 +228,10 @@ class SkyrimModManager(ModManager):
                 if is_populated(config_filename):
                     current_configurations = config_file(config_filename)
                     modified_configurations = self._merge_config_files(current_configurations, config_modifications)
-                    current_configurations.write(modified_configurations)
+                    with open(config_filename, 'w') as target_config_file:
+                        current_configurations.write(target_config_file)
 
     def _merge_config_files(self, current_config, config_updates):
-        merged_configurations = copy.deepcopy(current_config)
         if isinstance(current_config, configparser.ConfigParser) and isinstance(config_updates, configparser.ConfigParser):
             updated_sections = config_updates.sections()
             for section in updated_sections:
@@ -242,7 +241,7 @@ class SkyrimModManager(ModManager):
                     for option, value in config_updates.items(section):
                         if is_populated(option) and is_populated(value):
                             current_config.set(section, option, value)
-        return merged_configurations
+        return current_config
 
 
 

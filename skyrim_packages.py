@@ -143,7 +143,8 @@ class ImmersiveAnimationPack(SkyrimModPackage):
     def mods(self):
         return (skyrim_mods.OSAnimations.Instance(),)
 
-class TemporaryPackage(SkyrimModPackage):
+class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.OSAnimations.Instance(),)
+        return (skyrim_mods.TestMod1.Instance(),
+                skyrim_mods.TestMod2.Instance(),)
 
