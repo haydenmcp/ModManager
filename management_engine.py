@@ -9,6 +9,7 @@ import enum
 from zipfile import ZipFile, ZipInfo
 import appconfig
 import copy
+import json
 import modcore
 import os
 
@@ -32,6 +33,7 @@ class ModManager(object):
 ###############################################################################
 class SkyrimModManager(ModManager):
     def __init__(self):
+        self._mod_installation_history = self._read_from_install_history()
         self._mod_installation_status = dict()
         self._registered_file_modifications = dict()
         self._game_mod_dir = appconfig.SKYRIM_APP_MOD_DIRECTORY
@@ -42,21 +44,19 @@ class SkyrimModManager(ModManager):
             for mod_package in mod_packages:
                 if is_valid_package(mod_package):
                     self._install_mods(mod_package.mods())
+                    self._write_to_install_history()
 
     def _install_mods(self, mods):
         if is_populated(mods):
             for mod in mods:
                 if is_valid_mod(mod):
-                    # TODO: Modify to persist mod install status collection. Otherwise, two install sessions
-                    # TODO: could result in overwriting previously installed mods screwing up install order
-                    # TODO: because the system will have no recollection of which mods were previously installed.
                     if self.install_is_pending(mod):
                         self._handle_dependencies(mod.dependencies())
                         self._handle_superiorities(mod.superiorities())
                         self._install_mod(mod)
                         self._handle_patches(mod.patches())
                     else:
-                        log.debug("Mod Already Installed: {0}".format(mod.__class__.__name__))
+                        log.info("Mod Already Installed: {0}".format(mod.__class__.__name__))
 
     # TODO: This method cant be called directly. If done that way, dependency resolution
     # TODO: occurs out of order because dependency install is direct vs. going through
@@ -150,18 +150,59 @@ class SkyrimModManager(ModManager):
         if is_valid_mod(mod) and isinstance(status, InstallStatus):
             self._mod_installation_status[mod] = status
 
+    def _write_to_install_history(self):
+        try:
+            log.info(r"Writing installed mods to config file: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
+            self._update_installation_history()
+            with open(appconfig.INSTALLED_MODS_CONFIG_FILE, 'w') as installed_mods_config_file:
+                json.dump(self._mod_installation_history, installed_mods_config_file)
+        except Exception:
+            log.error("Failed to write installed mods to: {0}\n\t{1}".format(appconfig.INSTALLED_MODS_CONFIG_FILE,
+                                                                             traceback.format_exc()))
+
+    def _read_from_install_history(self):
+        configurations = dict()
+        try:
+            log.info(r"Reading currently installed mods from config file: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
+            with open(appconfig.INSTALLED_MODS_CONFIG_FILE, 'r') as installed_mods_config_file:
+                # TODO: Refactor such that more readable.
+                configurations = json.load(installed_mods_config_file)
+                for mod_name, status_string in configurations.items():
+                    configurations[mod_name] = InstallStatus[status_string]
+        except Exception:
+            log.warning(r"Couldn't find mod installation configuration file. Assuming fresh install.")
+        return configurations
+
+    def _update_installation_history(self):
+        # TODO: Refactor such that more readable.
+        string_keyed_mod_dict = dict()
+        for mod_name, status_object in self._mod_installation_history.items():
+            self._mod_installation_history[mod_name] = status_object.name
+        for mod, status in self._mod_installation_status.items():
+            string_keyed_mod_dict[mod.__class__.__name__] = status.name
+        for mod_name, status_name in string_keyed_mod_dict.items():
+            if mod_name not in self._mod_installation_history:
+                self._mod_installation_history[mod_name] = status_name
+
     def install_is_pending(self, mod):
         if is_valid_mod(mod):
-            return self._mod_installation_status[mod] == InstallStatus.PENDING
+            mod_is_currently_pending = self._mod_installation_status[mod] == InstallStatus.PENDING
+            mod_was_previously_installed = self.is_in_install_history(mod)
+            return mod_is_currently_pending and not mod_was_previously_installed
 
+    # TODO: Better name?
+    def is_in_install_history(self, mod):
+        mod_was_previously_installed = False
+        if mod.__class__.__name__ in self._mod_installation_history:
+            mod_was_previously_installed = True
+        return mod_was_previously_installed
 
 ###############################################################################
 #   Helper functions
 ###############################################################################
 class InstallStatus(enum.Enum):
-    PENDING = 1,
-    COMPLETE = 2
-
+    PENDING = "PENDING",
+    COMPLETE = "COMPLETE"
 
 ###############################################################################
 #   Helper functions
@@ -227,3 +268,4 @@ def has_extension(filename):
         split_filename = os.path.splitext(filename)
         result = split_filename[1] not in ""
     return result
+
