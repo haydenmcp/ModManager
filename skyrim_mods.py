@@ -616,13 +616,14 @@ class NetImmerseOverrideForSKSE(SkyrimMod):
 @Singleton
 class TestMod1(SkyrimMod):
     def configurations(self):
-        return {appconfig.TEST_CONFIG_INI_FILE: {"Animal": {"active": 0}},
-                appconfig.TEST_CONFIG_INI_FILE: {"Animal": {"cute": 1}},}
+        return {appconfig.TEST_CONFIG_INI_FILE_1: {"Animal": {"active": 0}},
+                appconfig.TEST_CONFIG_INI_FILE_1: {"Animal": {"cute": 1}}, }
 
 @Singleton
 class TestMod2(SkyrimMod):
     def configurations(self):
-        return {appconfig.TEST_CONFIG_INI_FILE: {"Animal": {"fuzzy": 0}},}
+        return {appconfig.TEST_CONFIG_INI_FILE_1: {"Animal": {"fuzzy": 0}},
+                appconfig.TEST_CONFIG_INI_FILE_2: {"Animal": {"fuzzy": 0}}, }
 
 ###############################################################################
 #   Helper functions

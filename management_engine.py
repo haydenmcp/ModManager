@@ -194,7 +194,7 @@ class SkyrimModManager(ModManager):
                 for mod_name, status_string in configurations.items():
                     configurations[mod_name] = InstallStatus[status_string]
         except Exception:
-            log.warning(r"Couldn't find mod installation configuration file. Assuming fresh install.")
+            log.warning(r"An error occurred while trying to access installed mods. Assuming fresh install.")
         return configurations
 
     def _update_installation_history(self):
@@ -225,11 +225,13 @@ class SkyrimModManager(ModManager):
     def _update_game_configurations(self):
         if is_populated(self._config_modifications):
             for config_filename, config_modifications in self._config_modifications.items():
+                log.info(r"Updating configuration file: {0}".format(config_filename))
                 if is_populated(config_filename):
-                    current_configurations = config_file(config_filename)
-                    modified_configurations = self._merge_config_files(current_configurations, config_modifications)
+                    config_file_contents = config_file(config_filename)
+                    self._merge_config_files(config_file_contents, config_modifications)
                     with open(config_filename, 'w') as target_config_file:
-                        current_configurations.write(target_config_file)
+                        config_file_contents.write(target_config_file)
+                log.info(r"Configuration file update successful: {0}".format(config_filename))
 
     def _merge_config_files(self, current_config, config_updates):
         if isinstance(current_config, configparser.ConfigParser) and isinstance(config_updates, configparser.ConfigParser):
@@ -240,6 +242,7 @@ class SkyrimModManager(ModManager):
                         current_config.add_section(section)
                     for option, value in config_updates.items(section):
                         if is_populated(option) and is_populated(value):
+                            log.info("\tOption: {0}, Value: {1}".format(option, value))
                             current_config.set(section, option, value)
         return current_config
 
