@@ -16,7 +16,6 @@ import os
 # TODO: Add traceback to logging module. Shouldn't need to include this in every module with logging.
 import traceback
 from applogger import ModManagementLogger
-
 log = ModManagementLogger()
 
 
@@ -67,6 +66,11 @@ class SkyrimModManager(ModManager):
                         self._handle_dependencies(mod.dependencies())
                         self._handle_superiorities(mod.superiorities())
                         self._install_mod(mod)
+                        # TODO: *** Need to handle patches such that install of modA not requiring patch,
+                        # TODO: followed by subsequent install of modB which suddenly requires that
+                        # TODO: modA is patched, is possible. Currently, this would be recorded as
+                        # TODO: installed and wouldn't execute if-statement resulting in patch
+                        # TODO: not being added.
                         self._handle_patches(mod.patches())
                     else:
                         log.info("Mod Already Installed: {0}".format(mod.__class__.__name__))
