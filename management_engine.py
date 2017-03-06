@@ -47,6 +47,9 @@ class SkyrimModManager(ModManager):
         if is_populated(mods):
             for mod in mods:
                 if is_valid_mod(mod):
+                    # TODO: Modify to persist mod install status collection. Otherwise, two install sessions
+                    # TODO: could result in overwriting previously installed mods screwing up install order
+                    # TODO: because the system will have no recollection of which mods were previously installed.
                     if self.install_is_pending(mod):
                         self._handle_dependencies(mod.dependencies())
                         self._handle_superiorities(mod.superiorities())
