@@ -118,6 +118,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.ImmersiveWeapons.Instance(),
             skyrim_mods.WearableLanterns.Instance(),
             skyrim_mods.AmazingFollowerTweaks.Instance(),
+            skyrim_mods.DuelCombatRealism.Instance(),
         )
 
 class WeaponAndArmorPack(SkyrimModPackage):
@@ -131,11 +132,20 @@ class WeaponAndArmorPack(SkyrimModPackage):
                 skyrim_mods.UniqueUniquesWeapons.Instance(),
                 skyrim_mods.GhosuWeaponPack.Instance(),
                 skyrim_mods.WarriorWithinWeapons.Instance(),
-                skyrim_mods.DreadKnightWeaponSet.Instance(),)
+                skyrim_mods.DreadKnightWeaponSet.Instance(),
+                skyrim_mods.LOTRWeapons.Instance(),)
+
+class AnimationFoundationPack(SkyrimModPackage):
+    def mods(self):
+        return (skyrim_mods.FNISAnimation.Instance(),)
+
+class ImmersiveAnimationPack(SkyrimModPackage):
+    def mods(self):
+        return (skyrim_mods.OSAnimations.Instance(),)
 
 class TemporaryPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.RiversideLodge.Instance(),)
+        return (skyrim_mods.OSAnimations.Instance(),)
 
     # TODO: Order of mods here is important. Make sure to update such that incompatibility,
     # TODO: dependencies, etc are intelligently resolved by application (order shouldn't matter

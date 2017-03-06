@@ -509,6 +509,11 @@ class AmazingFollowerTweaks(SkyrimMod):
     pass
 
 @Singleton
+class DuelCombatRealism(SkyrimMod):
+    pass
+
+
+@Singleton
 class HDArmoredCirclets(SkyrimMod):
     pass
 
@@ -530,6 +535,9 @@ class VividCloudsAndFogsClimatesOfTamrielPatch(SkyrimMod):
 class WearableLanterns(SkyrimMod):
     pass
 
+###############################################################################
+#   Weapons/Armor mods
+###############################################################################
 @Singleton
 class RealBows(SkyrimMod):
     pass
@@ -565,6 +573,43 @@ class WarriorWithinWeapons(SkyrimMod):
 @Singleton
 class DreadKnightWeaponSet(SkyrimMod):
     pass
+
+@Singleton
+class LOTRWeapons(SkyrimMod):
+    pass
+
+
+###############################################################################
+#   Animation mods
+###############################################################################
+@Singleton
+class FNISAnimation(SkyrimMod):
+    def run_post_processing(self):
+        # TODO: add run of GenerateFNISforUsers?
+        pass
+
+@Singleton
+class OSASkyrimAscendencyEngineForImmersiveAnimations(SkyrimMod):
+    pass
+
+@Singleton
+class OSAnimations(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, FNISAnimation.Instance()),
+                modcore.Dependency(self, NetImmerseOverrideForSKSE.Instance()),
+                modcore.Dependency(self, SkyUI5.Instance()),
+                modcore.Dependency(self, OSASkyrimAscendencyEngineForImmersiveAnimations.Instance()),)
+
+
+###############################################################################
+#   Misc mods
+###############################################################################
+@Singleton
+class NetImmerseOverrideForSKSE(SkyrimMod):
+    def run_post_processing(self):
+        # TODO: add run of GenerateFNISforUsers?
+        pass
+
 
 ###############################################################################
 #   Helper functions
