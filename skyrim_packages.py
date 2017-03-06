@@ -58,9 +58,14 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
             skyrim_mods.VividLandscapesTundraSMIMPatch.Instance(),
             skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
+            skyrim_mods.VividCloudsAndFogs.Instance(),
+            skyrim_mods.VividCloudsAndFogsClimatesOfTamrielPatch.Instance(),
             skyrim_mods.FinerDust.Instance(),
             skyrim_mods.RealisticSmokeAndEmbers.Instance(),
             skyrim_mods.LanternsOfSkyrim.Instance(),
+            skyrim_mods.BlacksmithWaterFix.Instance(),
+            skyrim_mods.HDArmoredCirclets.Instance(),
+            skyrim_mods.RiversideLodge.Instance(),
             skyrim_mods.ParticlePatchForENB.Instance(), # todo: how to include ENB outside of this pack? It's not really related
             skyrim_mods.SubsurfaceScatteringPatchForENB.Instance(),
             skyrim_mods.ParallaxTerrain4K.Instance(),
@@ -88,6 +93,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.EyesOfBeautyNPC.Instance(),
             skyrim_mods.HighDefinitionTeeth.Instance(),
             skyrim_mods.RealisticRagdollsAndForce.Instance(),
+            skyrim_mods.FootprintsInSnow.Instance(),
         )
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
@@ -103,7 +109,33 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.RealisticNeedsAndDiseases.Instance(),
             skyrim_mods.ImmersivePatrols.Instance(),
             skyrim_mods.TouringCarriages.Instance(),
+            skyrim_mods.RSChildrenOverhaul.Instance(),
+            skyrim_mods.RSChildrenOverhaulUnofficialSkyrimPatch.Instance(),
+            skyrim_mods.ImmersiveHUD.Instance(),
+            skyrim_mods.ImmersiveArmorsPart1.Instance(),
+            skyrim_mods.ImmersiveArmorsPart2.Instance(),
+            skyrim_mods.ImmersiveArmorsUNPPatch.Instance(),
+            skyrim_mods.ImmersiveWeapons.Instance(),
+            skyrim_mods.WearableLanterns.Instance(),
+            skyrim_mods.AmazingFollowerTweaks.Instance(),
         )
+
+class WeaponAndArmorPack(SkyrimModPackage):
+    def mods(self):
+        return (skyrim_mods.PaladinArtifactsAndArmor.Instance(),
+                skyrim_mods.RealBows.Instance(),
+                skyrim_mods.TemplarSet.Instance(),
+                skyrim_mods.WeaponsOfTheThirdEra.Instance(),
+                skyrim_mods.BlacksmithWaterFix.Instance(),
+                skyrim_mods.JaysusSwords.Instance(),
+                skyrim_mods.UniqueUniquesWeapons.Instance(),
+                skyrim_mods.GhosuWeaponPack.Instance(),
+                skyrim_mods.WarriorWithinWeapons.Instance(),
+                skyrim_mods.DreadKnightWeaponSet.Instance(),)
+
+class TemporaryPackage(SkyrimModPackage):
+    def mods(self):
+        return (skyrim_mods.RiversideLodge.Instance(),)
 
     # TODO: Order of mods here is important. Make sure to update such that incompatibility,
     # TODO: dependencies, etc are intelligently resolved by application (order shouldn't matter

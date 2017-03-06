@@ -298,6 +298,10 @@ class RealisticLightingOverhaul(SkyrimMod):
 class LanternsOfSkyrim(SkyrimMod):
     pass
 
+@Singleton
+class BlacksmithWaterFix(SkyrimMod):
+    pass
+
 # TODO: Separate Enb out from Skyrim-specific mod
 @Singleton
 class EnbSeriesV308(SkyrimMod):
@@ -325,6 +329,10 @@ class RealVisionENB(SkyrimMod):
 class RealVisionFloraPatch(SkyrimMod):
     def dependencies(self):
         return (modcore.Dependency(self, RealVisionENB.Instance()),)
+
+@Singleton
+class FootprintsInSnow(SkyrimMod):
+    pass
 
 
 ###############################################################################
@@ -455,6 +463,108 @@ class TouringCarriages(SkyrimMod):
 class LanternsOfSkyrim(SkyrimMod):
     pass
 
+@Singleton
+class RSChildrenOverhaul(SkyrimMod):
+    def patches(self):
+        return (modcore.Patch(self, RSChildrenOverhaulUnofficialSkyrimPatch.Instance(), UnofficialSkyrimPatch.Instance()),)
+
+@Singleton
+class RSChildrenOverhaulUnofficialSkyrimPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, RSChildrenOverhaul.Instance()),)
+
+@Singleton
+class ImmersiveHUD(SkyrimMod):
+    pass
+
+@Singleton
+class ImmersiveWeapons(SkyrimMod):
+    pass
+
+@Singleton
+class ImmersiveArmorsPart1(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, ImmersiveArmorsPart2.Instance()),)
+
+    def patches(self):
+        return (modcore.Patch(self, ImmersiveArmorsUNPPatch.Instance(), DimonizedUNPFemaleBody.Instance()),)
+
+@Singleton
+class ImmersiveArmorsPart2(SkyrimMod):
+    def patches(self):
+        return (modcore.Patch(self, ImmersiveArmorsUNPPatch.Instance(), DimonizedUNPFemaleBody.Instance()),)
+
+@Singleton
+class ImmersiveArmorsUNPPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, ImmersiveArmorsPart1.Instance()),
+                modcore.Dependency(self, ImmersiveArmorsPart2.Instance()),)
+
+@Singleton
+class QualityWorldMapPaperEdition(SkyrimMod):
+    pass
+
+@Singleton
+class AmazingFollowerTweaks(SkyrimMod):
+    pass
+
+@Singleton
+class HDArmoredCirclets(SkyrimMod):
+    pass
+
+@Singleton
+class RiversideLodge(SkyrimMod):
+    pass
+
+@Singleton
+class VividCloudsAndFogs(SkyrimMod):
+    def patches(self):
+        return (modcore.Patch(self, VividCloudsAndFogsClimatesOfTamrielPatch.Instance(), ClimatesOfTamriel.Instance()),)
+
+@Singleton
+class VividCloudsAndFogsClimatesOfTamrielPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, VividCloudsAndFogs.Instance()),)
+
+@Singleton
+class WearableLanterns(SkyrimMod):
+    pass
+
+@Singleton
+class RealBows(SkyrimMod):
+    pass
+
+@Singleton
+class PaladinArtifactsAndArmor(SkyrimMod):
+    pass
+
+@Singleton
+class TemplarSet(SkyrimMod):
+    pass
+
+@Singleton
+class WeaponsOfTheThirdEra(SkyrimMod):
+    pass
+
+@Singleton
+class UniqueUniquesWeapons(SkyrimMod):
+    pass
+
+@Singleton
+class JaysusSwords(SkyrimMod):
+    pass
+
+@Singleton
+class GhosuWeaponPack(SkyrimMod):
+    pass
+
+@Singleton
+class WarriorWithinWeapons(SkyrimMod):
+    pass
+
+@Singleton
+class DreadKnightWeaponSet(SkyrimMod):
+    pass
 
 ###############################################################################
 #   Helper functions
