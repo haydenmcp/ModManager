@@ -6,8 +6,8 @@
 from common import *
 from management_engine import SkyrimModManager
 
-from applogger import ModiLogger
-log = ModiLogger()
+from applogger import ModManagementLogger
+log = ModManagementLogger()
 
 _mod_manager = SkyrimModManager()
 

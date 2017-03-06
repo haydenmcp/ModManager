@@ -15,9 +15,9 @@ import os
 
 # TODO: Add traceback to logging module. Shouldn't need to include this in every module with logging.
 import traceback
-from applogger import ModiLogger
+from applogger import ModManagementLogger
 
-log = ModiLogger()
+log = ModManagementLogger()
 
 
 class ModManager(object):
@@ -45,6 +45,19 @@ class SkyrimModManager(ModManager):
                 if is_valid_package(mod_package):
                     self._install_mods(mod_package.mods())
                     self._write_to_install_history()
+
+    def install_is_pending(self, mod):
+        if is_valid_mod(mod):
+            mod_is_currently_pending = self._mod_installation_status[mod] == InstallStatus.PENDING
+            mod_was_previously_installed = self.is_in_install_history(mod)
+            return mod_is_currently_pending and not mod_was_previously_installed
+
+    # TODO: Better name?
+    def is_in_install_history(self, mod):
+        mod_was_previously_installed = False
+        if mod.__class__.__name__ in self._mod_installation_history:
+            mod_was_previously_installed = True
+        return mod_was_previously_installed
 
     def _install_mods(self, mods):
         if is_populated(mods):
@@ -183,19 +196,6 @@ class SkyrimModManager(ModManager):
         for mod_name, status_name in string_keyed_mod_dict.items():
             if mod_name not in self._mod_installation_history:
                 self._mod_installation_history[mod_name] = status_name
-
-    def install_is_pending(self, mod):
-        if is_valid_mod(mod):
-            mod_is_currently_pending = self._mod_installation_status[mod] == InstallStatus.PENDING
-            mod_was_previously_installed = self.is_in_install_history(mod)
-            return mod_is_currently_pending and not mod_was_previously_installed
-
-    # TODO: Better name?
-    def is_in_install_history(self, mod):
-        mod_was_previously_installed = False
-        if mod.__class__.__name__ in self._mod_installation_history:
-            mod_was_previously_installed = True
-        return mod_was_previously_installed
 
 ###############################################################################
 #   Helper functions

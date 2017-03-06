@@ -2,9 +2,9 @@
 #   @description: Module containing mods for skyrim.
 #   @author: Hayden McParlane
 ###############################################################################
-from applogger import ModiLogger
+from applogger import ModManagementLogger
 
-log = ModiLogger()
+log = ModManagementLogger()
 
 import appconfig
 import modcore

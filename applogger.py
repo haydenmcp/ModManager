@@ -7,7 +7,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-class ModiLogger(object):
+class ModManagementLogger(object):
 
     def debug(self, msg):
         logging.debug(msg)
