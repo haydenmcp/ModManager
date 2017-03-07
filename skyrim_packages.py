@@ -18,8 +18,11 @@ class FoundationPatchPack(SkyrimModPackage):
 class RealisticWorldWithRealVisionENB(SkyrimModPackage):
 
     # todo; remove environmental enhancements from high res pack. Enhancements should be separate.
+    # TODO: Eliminate patch definitions. Patches should be auto-handled by installer. Need to ensure
+    # TODO: correctness of that subsystem.
     def mods(self):
         return (
+            # Environment models/textures
             skyrim_mods.RuinsClutterImproved.Instance(),
             skyrim_mods.CinematicFireEffects.Instance(),
             skyrim_mods.HDEnhancedTerrain.Instance(),
@@ -75,10 +78,13 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.ClimatesOfTamrielSupremeStorms.Instance(),
             skyrim_mods.ClimatesOfTamrielWeatherPatch.Instance(),
             skyrim_mods.TrueStorms.Instance(),
+            skyrim_mods.EnhancedBloodTextures.Instance(),
             skyrim_mods.RealisticLightingOverhaul.Instance(),
             skyrim_mods.EnbSeriesV308.Instance(),
             skyrim_mods.RealVisionENB.Instance(),
             skyrim_mods.RealVisionFloraPatch.Instance(),
+
+            # Avatar models/textures
             skyrim_mods.ShowRaceMenuPrecacheKiller.Instance(),
             skyrim_mods.XeniusCharacterEnhancementFull.Instance(),
             skyrim_mods.ApachiiSkyHairFull.Instance(),
@@ -119,6 +125,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.WearableLanterns.Instance(),
             skyrim_mods.AmazingFollowerTweaks.Instance(),
             skyrim_mods.DuelCombatRealism.Instance(),
+            skyrim_mods.Warzones2015.Instance(),
         )
 
 class WeaponAndArmorPack(SkyrimModPackage):
@@ -133,7 +140,8 @@ class WeaponAndArmorPack(SkyrimModPackage):
                 skyrim_mods.GhosuWeaponPack.Instance(),
                 skyrim_mods.WarriorWithinWeapons.Instance(),
                 skyrim_mods.DreadKnightWeaponSet.Instance(),
-                skyrim_mods.LOTRWeapons.Instance(),)
+                skyrim_mods.LOTRWeapons.Instance(),
+                skyrim_mods.ApocalypseMagic.Instance(),)
 
 class AnimationFoundationPack(SkyrimModPackage):
     def mods(self):
@@ -145,6 +153,7 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 
 class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.TestMod1.Instance(),
-                skyrim_mods.TestMod2.Instance(),)
+        return (skyrim_mods.EnhancedBloodTextures.Instance(),
+                skyrim_mods.Warzones2015.Instance(),
+                skyrim_mods.ApocalypseMagic.Instance(),)
 

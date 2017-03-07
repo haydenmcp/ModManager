@@ -535,6 +535,15 @@ class VividCloudsAndFogsClimatesOfTamrielPatch(SkyrimMod):
 class WearableLanterns(SkyrimMod):
     pass
 
+@Singleton
+class EnhancedBloodTextures(SkyrimMod):
+    pass
+
+@Singleton
+class Warzones2015(SkyrimMod):
+    pass
+
+
 ###############################################################################
 #   Weapons/Armor mods
 ###############################################################################
@@ -578,6 +587,9 @@ class DreadKnightWeaponSet(SkyrimMod):
 class LOTRWeapons(SkyrimMod):
     pass
 
+@Singleton
+class ApocalypseMagic(SkyrimMod):
+    pass
 
 ###############################################################################
 #   Animation mods
@@ -609,21 +621,6 @@ class NetImmerseOverrideForSKSE(SkyrimMod):
     def run_post_processing(self):
         # TODO: add run of GenerateFNISforUsers?
         pass
-
-###############################################################################
-#   Test mods
-###############################################################################
-@Singleton
-class TestMod1(SkyrimMod):
-    def configurations(self):
-        return {appconfig.TEST_CONFIG_INI_FILE_1: {"Animal": {"active": 0}},
-                appconfig.TEST_CONFIG_INI_FILE_1: {"Animal": {"cute": 1}}, }
-
-@Singleton
-class TestMod2(SkyrimMod):
-    def configurations(self):
-        return {appconfig.TEST_CONFIG_INI_FILE_1: {"Animal": {"fuzzy": 0}},
-                appconfig.TEST_CONFIG_INI_FILE_2: {"Animal": {"fuzzy": 0}}, }
 
 ###############################################################################
 #   Helper functions

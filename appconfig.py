@@ -34,7 +34,7 @@ SKYRIM_ENBLOCAL_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "enblocal.i
 ################################################################################
 #   Test Config
 ################################################################################
-APP_MOD_DIR_SKYRIM = r"C:\personal\gaming\nmm\mods"
-SKYRIM_DATA_DIR = r"C:\personal\gaming\nmm\mods\after_install"
-TEST_CONFIG_INI_FILE_1 = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Goat.ini")
-TEST_CONFIG_INI_FILE_2 = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Sheep.ini")
+# APP_MOD_DIR_SKYRIM = r"C:\personal\gaming\nmm\mods"
+# SKYRIM_DATA_DIR = r"C:\personal\gaming\nmm\mods\after_install"
+# TEST_CONFIG_INI_FILE_1 = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Goat.ini")
+# TEST_CONFIG_INI_FILE_2 = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Sheep.ini")
