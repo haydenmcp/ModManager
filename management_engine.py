@@ -31,7 +31,7 @@ class ModManager(object):
 ###############################################################################
 class SkyrimModManager(ModManager):
     def __init__(self):
-        self._mod_installation_history = self._read_from_install_history()
+        self._mod_installation_history = self._retrieve_install_history()
         self._mod_installation_status = dict()
         self._registered_file_modifications = dict()
         self._game_mod_dir = appconfig.APP_MOD_DIR_SKYRIM
@@ -183,7 +183,7 @@ class SkyrimModManager(ModManager):
         except Exception:
             log.error("Failed to write installed mods to: {0}".format(appconfig.INSTALLED_MODS_CONFIG_FILE))
 
-    def _read_from_install_history(self):
+    def _retrieve_install_history(self):
         configurations = dict()
         try:
             log.info(
@@ -238,11 +238,12 @@ class SkyrimModManager(ModManager):
             updated_sections = config_updates.sections()
             for section in updated_sections:
                 if is_populated(section):
+                    log.info("\t[{0}]".format(section))
                     if not current_config.has_section(section):
                         current_config.add_section(section)
                     for option, value in config_updates.items(section):
                         if is_populated(option) and is_populated(value):
-                            log.info("\tOption: {0}, Value: {1}".format(option, value))
+                            log.info("\t{0} = {1}".format(option, value))
                             current_config.set(section, option, value)
         return current_config
 
