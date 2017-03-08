@@ -55,6 +55,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.DetailedRugs.Instance(),
             skyrim_mods.PureWatersLegendaryEdition.Instance(),
             skyrim_mods.PureWatersLandscapeTextures.Instance(),
+            skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
             skyrim_mods.VividLandscapesRockingStonesParallax.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
             skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
@@ -63,6 +64,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
             skyrim_mods.VividCloudsAndFogs.Instance(),
             skyrim_mods.VividCloudsAndFogsClimatesOfTamrielPatch.Instance(),
+            skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
             skyrim_mods.FinerDust.Instance(),
             skyrim_mods.RealisticSmokeAndEmbers.Instance(),
             skyrim_mods.LanternsOfSkyrim.Instance(),
@@ -87,12 +89,14 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             # Avatar models/textures
             skyrim_mods.ShowRaceMenuPrecacheKiller.Instance(),
             skyrim_mods.XeniusCharacterEnhancementFull.Instance(),
+            skyrim_mods.SuperiorLoreFriendlyHair.Instance(),
             skyrim_mods.ApachiiSkyHairFull.Instance(),
             skyrim_mods.ApachiiSkyHairFemale.Instance(),
             skyrim_mods.ApachiiSkyHairMale.Instance(),
             skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
             skyrim_mods.DimonizedUNPFemaleBody.Instance(),
             skyrim_mods.AllInOneFacePackUNP.Instance(),
+            skyrim_mods.MatureSkinTexturesUNP.Instance(),
             skyrim_mods.BetterMalesFace.Instance(),
             skyrim_mods.BetterMalesBody.Instance(),
             skyrim_mods.EyesOfBeauty.Instance(),
@@ -126,6 +130,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.AmazingFollowerTweaks.Instance(),
             skyrim_mods.DuelCombatRealism.Instance(),
             skyrim_mods.Warzones2015.Instance(),
+            skyrim_mods.ImprovedCombatSounds.Instance(),
         )
 
 class WeaponAndArmorPack(SkyrimModPackage):
@@ -153,7 +158,8 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 
 class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.EnhancedBloodTextures.Instance(),
-                skyrim_mods.Warzones2015.Instance(),
-                skyrim_mods.ApocalypseMagic.Instance(),)
+        return (skyrim_mods.ImprovedCombatSounds.Instance(),
+                skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
+                skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
+                skyrim_mods.MatureSkinTexturesUNP.Instance(),)
 

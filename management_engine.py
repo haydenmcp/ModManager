@@ -16,7 +16,7 @@ import copy
 import json
 import modcore
 import os
-from zipfile import ZipFile, ZipInfo
+from zipfile import ZipFile
 
 
 class ModManager(object):

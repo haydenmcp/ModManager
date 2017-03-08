@@ -243,6 +243,12 @@ class VividLandscapesTundraMossMountainPatch(SkyrimMod):
         return (modcore.Dependency(self, VividLandscapesRockingStonesParallax.Instance()),)
 
 @Singleton
+class HorizonOfDreamsHDNightSky(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, VividLandscapesRockingStonesParallax.Instance()),)
+
+
+@Singleton
 class FinerDust(SkyrimMod):
     pass
 
@@ -334,6 +340,9 @@ class RealVisionFloraPatch(SkyrimMod):
 class FootprintsInSnow(SkyrimMod):
     pass
 
+@Singleton
+class WondersOfWeatherRainDropSplashAndInteriorSounds(SkyrimMod):
+    pass
 
 ###############################################################################
 # Model mods
@@ -345,6 +354,11 @@ class ShowRaceMenuPrecacheKiller(SkyrimMod):
 @Singleton
 class XeniusCharacterEnhancementFull(SkyrimMod):
     pass
+
+@Singleton
+class SuperiorLoreFriendlyHair(SkyrimMod):
+    pass
+
 
 @Singleton
 class ApachiiSkyHairFull(SkyrimMod):
@@ -371,6 +385,11 @@ class DimonizedUNPFemaleBody(SkyrimMod):
 
 @Singleton
 class AllInOneFacePackUNP(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, DimonizedUNPFemaleBody.Instance()),)
+
+@Singleton
+class MatureSkinTexturesUNP(SkyrimMod):
     def dependencies(self):
         return (modcore.Dependency(self, DimonizedUNPFemaleBody.Instance()),)
 
@@ -537,12 +556,22 @@ class WearableLanterns(SkyrimMod):
 
 @Singleton
 class EnhancedBloodTextures(SkyrimMod):
-    pass
+    def patches(self):
+        return (modcore.Patch(self, ImprovedCombatSoundsEnhancedBloodTexturesPatch.Instance(),
+                              ImprovedCombatSounds.Instance()),)
 
 @Singleton
 class Warzones2015(SkyrimMod):
     pass
 
+@Singleton
+class ImprovedCombatSounds(SkyrimMod):
+    pass
+
+@Singleton
+class ImprovedCombatSoundsEnhancedBloodTexturesPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, ImprovedCombatSounds.Instance()),)
 
 ###############################################################################
 #   Weapons/Armor mods
