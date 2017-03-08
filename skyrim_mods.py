@@ -214,6 +214,11 @@ class VividLandscapesRockingStonesParallax(SkyrimMod):
     pass
 
 @Singleton
+class SuperiorRocksDarkGrey4K(SkyrimMod):
+    pass
+
+
+@Singleton
 class VividLandscapesCliffsAndCreeks(SkyrimMod):
     def patches(self):
         return (modcore.Patch(self, VividLandscapesRockingStonesCompatibilityPatch.Instance(),

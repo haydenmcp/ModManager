@@ -56,7 +56,8 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.PureWatersLegendaryEdition.Instance(),
             skyrim_mods.PureWatersLandscapeTextures.Instance(),
             skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
-            skyrim_mods.VividLandscapesRockingStonesParallax.Instance(),
+            # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
+            skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
             skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
@@ -96,7 +97,6 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
             skyrim_mods.DimonizedUNPFemaleBody.Instance(),
             skyrim_mods.AllInOneFacePackUNP.Instance(),
-            skyrim_mods.MatureSkinTexturesUNP.Instance(),
             skyrim_mods.BetterMalesFace.Instance(),
             skyrim_mods.BetterMalesBody.Instance(),
             skyrim_mods.EyesOfBeauty.Instance(),
@@ -158,8 +158,5 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 
 class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.ImprovedCombatSounds.Instance(),
-                skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
-                skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
-                skyrim_mods.MatureSkinTexturesUNP.Instance(),)
+        return (skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),)
 
