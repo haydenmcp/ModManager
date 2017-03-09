@@ -90,26 +90,27 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.RealVisionENB.Instance(),
             skyrim_mods.RealVisionFloraPatch.Instance(),
             skyrim_mods.HighDefinitionFoodAndIngredients.Instance(),
-
-            # Avatar models/textures
-            skyrim_mods.ShowRaceMenuPrecacheKiller.Instance(),
-            skyrim_mods.XeniusCharacterEnhancementFull.Instance(),
-            skyrim_mods.SuperiorLoreFriendlyHair.Instance(),
-            skyrim_mods.ApachiiSkyHairFull.Instance(),
-            skyrim_mods.ApachiiSkyHairFemale.Instance(),
-            skyrim_mods.ApachiiSkyHairMale.Instance(),
-            skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
-            skyrim_mods.DimonizedUNPFemaleBody.Instance(),
-            skyrim_mods.AllInOneFacePackUNP.Instance(),
-            skyrim_mods.SportySexySweat.Instance(),
-            skyrim_mods.BetterMalesFace.Instance(),
-            skyrim_mods.BetterMalesBody.Instance(),
-            skyrim_mods.EyesOfBeauty.Instance(),
-            skyrim_mods.EyesOfBeautyNPC.Instance(),
-            skyrim_mods.HighDefinitionTeeth.Instance(),
-            skyrim_mods.RealisticRagdollsAndForce.Instance(),
-            skyrim_mods.FootprintsInSnow.Instance(),
         )
+
+class ActorModelAndTexturePack(SkyrimModPackage):
+    def mods(self):
+        return (skyrim_mods.ShowRaceMenuPrecacheKiller.Instance(),
+                skyrim_mods.XeniusCharacterEnhancementFull.Instance(),
+                skyrim_mods.SuperiorLoreFriendlyHair.Instance(),
+                skyrim_mods.ApachiiSkyHairFull.Instance(),
+                skyrim_mods.ApachiiSkyHairFemale.Instance(),
+                skyrim_mods.ApachiiSkyHairMale.Instance(),
+                skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
+                skyrim_mods.UNPMainFemaleBodyReplacer.Instance(),
+                skyrim_mods.AllInOneFacePackUNP.Instance(),
+                skyrim_mods.SportySexySweat.Instance(),
+                skyrim_mods.BetterMalesFace.Instance(),
+                skyrim_mods.BetterMalesBody.Instance(),
+                skyrim_mods.EyesOfBeauty.Instance(),
+                skyrim_mods.EyesOfBeautyNPC.Instance(),
+                skyrim_mods.HighDefinitionTeeth.Instance(),
+                skyrim_mods.RealisticRagdollsAndForce.Instance(),
+                skyrim_mods.FootprintsInSnow.Instance(),)
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
@@ -165,5 +166,5 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 
 class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),)
+        return (skyrim_mods.RealMountainsRebuilt2KClassicLight.Instance(),)
 

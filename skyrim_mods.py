@@ -222,6 +222,14 @@ class SuperiorRocksLightGrey4K(SkyrimMod):
     pass
 
 @Singleton
+class SuperiorRocksLightGrey2K(SkyrimMod):
+    pass
+
+@Singleton
+class RealMountainsRebuilt2KClassicLight(SkyrimMod):
+    pass
+
+@Singleton
 class VividLandscapesCliffsAndCreeks(SkyrimMod):
     def patches(self):
         return (modcore.Patch(self, VividLandscapesRockingStonesCompatibilityPatch.Instance(),
@@ -402,6 +410,10 @@ class ApachiiSkyHairNaturalRetexture(SkyrimMod):
 
 @Singleton
 class DimonizedUNPFemaleBody(SkyrimMod):
+    pass
+
+@Singleton
+class UNPMainFemaleBodyReplacer(SkyrimMod):
     pass
 
 @Singleton
