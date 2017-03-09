@@ -29,7 +29,7 @@ SKYRIM_GAME_CONFIG_DIR = r"{0}\{1}".format(STEAM_GAME_CONFIG_DIR, "skyrim")
 
 SKYRIM_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "Skyrim.ini")
 SKYRIM_PREFS_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "SkyrimPrefs.ini")
-SKYRIM_ENBLOCAL_INI_FILE = r"{0}\{1}".format(SKYRIM_GAME_CONFIG_DIR, "enblocal.ini")
+SKYRIM_ENBLOCAL_INI_FILE = r"{0}\{1}".format(SKYRIM_BASE_DIR, "enblocal.ini")
 
 ################################################################################
 #   Test Config

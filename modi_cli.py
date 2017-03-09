@@ -13,7 +13,7 @@ def run_skyrim_install():
         skyrim_packages.FoundationPatchPack(),
         skyrim_packages.RealisticWorldWithRealVisionENB(),
         skyrim_packages.HarshSkyrimImmersionPack(),
-        skyrim_packages.WeaponAndArmorPack()
+        skyrim_packages.WeaponAndArmorPack(),
     ])
     # client.install_mod_packages([
     #     skyrim_packages.TestPackage()
