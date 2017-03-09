@@ -217,6 +217,9 @@ class VividLandscapesRockingStonesParallax(SkyrimMod):
 class SuperiorRocksDarkGrey4K(SkyrimMod):
     pass
 
+@Singleton
+class SuperiorRocksLightGrey4K(SkyrimMod):
+    pass
 
 @Singleton
 class VividLandscapesCliffsAndCreeks(SkyrimMod):
@@ -349,6 +352,19 @@ class FootprintsInSnow(SkyrimMod):
 class WondersOfWeatherRainDropSplashAndInteriorSounds(SkyrimMod):
     pass
 
+@Singleton
+class HighDefinitionCoins(SkyrimMod):
+    pass
+
+@Singleton
+class IntricateSpiderWebs(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionFoodAndIngredients(SkyrimMod):
+    pass
+
+
 ###############################################################################
 # Model mods
 ###############################################################################
@@ -433,6 +449,10 @@ class EyesOfBeautyNPC(SkyrimMod):
 class RealisticRagdollsAndForce(SkyrimMod):
     pass
 
+@Singleton
+class SportySexySweat(SkyrimMod):
+    pass
+
 # class EnhancedCharacterEdit(SkyrimMod):
 #     def apply(self):
 #         extract_to_skyrim_data_folder(compressed_file(self.__class__.__name__))
@@ -469,7 +489,8 @@ class Tentapalooza(SkyrimMod):
 @Singleton
 class FrostfallSurvival(SkyrimMod):
     def dependencies(self):
-        return (modcore.Dependency(self, CompleteCampingSystem.Instance()),)
+        return (modcore.Dependency(self, CompleteCampingSystem.Instance()),
+                modcore.Dependency(self, BeltFastenedQuivers.Instance()),)
 
 @Singleton
 class RealisticNeedsAndDiseases(SkyrimMod):
@@ -490,12 +511,19 @@ class LanternsOfSkyrim(SkyrimMod):
 @Singleton
 class RSChildrenOverhaul(SkyrimMod):
     def patches(self):
-        return (modcore.Patch(self, RSChildrenOverhaulUnofficialSkyrimPatch.Instance(), UnofficialSkyrimPatch.Instance()),)
+        return (modcore.Patch(self, RSChildrenOverhaulUnofficialSkyrimPatch.Instance(), UnofficialSkyrimPatch.Instance()),
+                modcore.Patch(self, RSChildrenOverhaulInterestingNPCPatch.Instance(), InterestingNPCs.Instance()),)
 
 @Singleton
 class RSChildrenOverhaulUnofficialSkyrimPatch(SkyrimMod):
     def dependencies(self):
         return (modcore.Dependency(self, RSChildrenOverhaul.Instance()),)
+
+@Singleton
+class RSChildrenOverhaulInterestingNPCPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, RSChildrenOverhaul.Instance()),
+                modcore.Dependency(self, InterestingNPCs.Instance()),)
 
 @Singleton
 class ImmersiveHUD(SkyrimMod):
@@ -526,6 +554,10 @@ class ImmersiveArmorsUNPPatch(SkyrimMod):
 
 @Singleton
 class QualityWorldMapPaperEdition(SkyrimMod):
+    pass
+
+@Singleton
+class QualityWorldMapVividFlatRoadEdition(SkyrimMod):
     pass
 
 @Singleton
@@ -578,6 +610,10 @@ class ImprovedCombatSoundsEnhancedBloodTexturesPatch(SkyrimMod):
     def dependencies(self):
         return (modcore.Dependency(self, ImprovedCombatSounds.Instance()),)
 
+@Singleton
+class BeltFastenedQuivers(SkyrimMod):
+    pass
+
 ###############################################################################
 #   Weapons/Armor mods
 ###############################################################################
@@ -623,6 +659,14 @@ class LOTRWeapons(SkyrimMod):
 
 @Singleton
 class ApocalypseMagic(SkyrimMod):
+    pass
+
+@Singleton
+class BookOfSilenceHDArmor(SkyrimMod):
+    pass
+
+@Singleton
+class BookOfSilenceHDWeapons(SkyrimMod):
     pass
 
 ###############################################################################
