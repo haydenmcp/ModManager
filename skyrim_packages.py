@@ -85,6 +85,7 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.ClimatesOfTamrielWeatherPatch.Instance(),
             skyrim_mods.TrueStorms.Instance(),
             skyrim_mods.EnhancedBloodTextures.Instance(),
+            skyrim_mods.FootprintsInSnow.Instance(),
             skyrim_mods.RealisticLightingOverhaul.Instance(),
             skyrim_mods.EnbSeriesV308.Instance(),
             skyrim_mods.RealVisionENB.Instance(),
@@ -109,8 +110,7 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.EyesOfBeauty.Instance(),
                 skyrim_mods.EyesOfBeautyNPC.Instance(),
                 skyrim_mods.HighDefinitionTeeth.Instance(),
-                skyrim_mods.RealisticRagdollsAndForce.Instance(),
-                skyrim_mods.FootprintsInSnow.Instance(),)
+                skyrim_mods.RealisticRagdollsAndForce.Instance(),)
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
@@ -135,14 +135,14 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.WearableLanterns.Instance(),
             skyrim_mods.AmazingFollowerTweaks.Instance(),
             skyrim_mods.DuelCombatRealism.Instance(),
-            skyrim_mods.Warzones2015.Instance(),
+            # skyrim_mods.Warzones2015.Instance(),
             skyrim_mods.ImprovedCombatSounds.Instance(),
         )
 
 class WeaponAndArmorPack(SkyrimModPackage):
     def mods(self):
         return (skyrim_mods.BookOfSilenceHDArmor.Instance(),
-                skyrim_mods.BookOfSilenceHDWeapons.Instance(),
+                skyrim_mods.WeaponRetextureProject.Instance(),
                 skyrim_mods.PaladinArtifactsAndArmor.Instance(),
                 skyrim_mods.RealBows.Instance(),
                 skyrim_mods.TemplarSet.Instance(),
@@ -166,5 +166,5 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 
 class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.RealMountainsRebuilt2KClassicLight.Instance(),)
+        return (skyrim_mods.VividLandscapesRockingStonesParallaxGrey2K.Instance(),)
 

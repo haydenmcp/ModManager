@@ -214,6 +214,14 @@ class VividLandscapesRockingStonesParallax(SkyrimMod):
     pass
 
 @Singleton
+class VividLandscapesRockingStonesParallaxGrey2K(SkyrimMod):
+    pass
+
+@Singleton
+class VividLandscapesRockingStonesParallaxUncompressed2K(SkyrimMod):
+    pass
+
+@Singleton
 class SuperiorRocksDarkGrey4K(SkyrimMod):
     pass
 
@@ -680,6 +688,11 @@ class BookOfSilenceHDArmor(SkyrimMod):
 @Singleton
 class BookOfSilenceHDWeapons(SkyrimMod):
     pass
+
+@Singleton
+class WeaponRetextureProject(SkyrimMod):
+    pass
+
 
 ###############################################################################
 #   Animation mods
