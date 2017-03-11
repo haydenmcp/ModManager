@@ -43,6 +43,21 @@ class UnofficialSkyrimPatch(SkyrimMod):
         return (modcore.Dependency(self, UnofficialHighResolutionPatch.Instance()),)
 
 @Singleton
+class UnofficialHearthfirePatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, UnofficialSkyrimPatch.Instance()),)
+
+@Singleton
+class UnofficialDragonbornPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, UnofficialSkyrimPatch.Instance()),)
+
+@Singleton
+class UnofficialDawnguardPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, UnofficialSkyrimPatch.Instance()),)
+
+@Singleton
 class UnofficialSkyrimLegendaryEditionPatch(SkyrimMod):
     def dependencies(self):
         return (modcore.Dependency(self, UnofficialHighResolutionPatch.Instance()),)
@@ -69,7 +84,12 @@ class HDEnhancedTerrain(SkyrimMod):
 
 @Singleton
 class SkyrimDistanceOverhaul(SkyrimMod):
-    pass
+    # def configurations(self):
+    #     return {appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel1Distance": 70000 }},
+    #             appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel0Distance": 35000 }},}
+    def configurations(self):
+        return {appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel1Distance": 120000 }},
+                appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel0Distance": 60000 }},}
 
 @Singleton
 class SkyrimDistanceOverhaulSkymillsPatch(SkyrimMod):
@@ -341,12 +361,12 @@ class EnbSeriesV308(SkyrimMod):
 @Singleton
 class RealVisionENB(SkyrimMod):
 
-    # TODO: Use realvision auto-installer after extraction. currently, file modifications don't take place.
-    def run_post_processing(self):
-        log.info("Running 'RV_launcher.exe'")
-        install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIR)
-        if os.path.exists(install_script):
-            subprocess.call([install_script])
+    # # TODO: Post processing fails because of script being run from application. Troubleshoot.
+    # def run_post_processing(self):
+    #     log.info("Running 'RV_launcher.exe'")
+    #     install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIR)
+    #     if os.path.exists(install_script):
+    #         subprocess.call([install_script])
 
     def patches(self):
         return (modcore.Patch(self, RealVisionFloraPatch.Instance(), RealVisionENB.Instance()),)
@@ -354,6 +374,21 @@ class RealVisionENB(SkyrimMod):
     def dependencies(self):
         return (modcore.Dependency(self, EnbSeriesV308.Instance()),)
 
+class TrueVisionENB(SkyrimMod):
+
+    # # TODO: Post processing fails because of script being run from application. Troubleshoot.
+    # def run_post_processing(self):
+    #     log.info("Running 'RV_launcher.exe'")
+    #     install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIR)
+    #     if os.path.exists(install_script):
+    #         subprocess.call([install_script])
+    def configurations(self):
+        return ({appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bFloatPointRenderTarget": 1}}},
+                {appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bDrawLandShadows": 1}}},
+                {appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bTreesReceiveShadows": 1}}},)
+
+    def dependencies(self):
+        return (modcore.Dependency(self, EnbSeriesV308.Instance()),)
 
 @Singleton
 class RealVisionFloraPatch(SkyrimMod):
@@ -421,6 +456,10 @@ class DimonizedUNPFemaleBody(SkyrimMod):
     pass
 
 @Singleton
+class DimonizedUNPFemaleBodyUnderC(SkyrimMod):
+    pass
+
+@Singleton
 class UNPMainFemaleBodyReplacer(SkyrimMod):
     pass
 
@@ -452,9 +491,9 @@ class BetterMalesBody(SkyrimMod):
 class HighDefinitionTeeth(SkyrimMod):
     pass
 
-# @Singleton
-# class SkySightSkinsHDMaleTextures(SkyrimMod):
-#     pass
+@Singleton
+class SkySightSkinsHDMaleTextures(SkyrimMod):
+    pass
 
 @Singleton
 class EyesOfBeauty(SkyrimMod):
@@ -472,6 +511,19 @@ class RealisticRagdollsAndForce(SkyrimMod):
 @Singleton
 class SportySexySweat(SkyrimMod):
     pass
+
+@Singleton
+class MalesOfSkyrim(SkyrimMod):
+    pass
+
+@Singleton
+class OrdinaryWomenOfSkyrim(SkyrimMod):
+    pass
+
+@Singleton
+class UGarmentsForAll(SkyrimMod):
+    pass
+
 
 # class EnhancedCharacterEdit(SkyrimMod):
 #     def apply(self):
@@ -693,6 +745,17 @@ class BookOfSilenceHDWeapons(SkyrimMod):
 class WeaponRetextureProject(SkyrimMod):
     pass
 
+@Singleton
+class PerfectLegionnaireArmor(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionArmoredCirclets4K(SkyrimMod):
+    pass
+
+@Singleton
+class RealisticBowSounds(SkyrimMod):
+    pass
 
 ###############################################################################
 #   Animation mods
@@ -721,6 +784,12 @@ class OSAnimations(SkyrimMod):
 ###############################################################################
 @Singleton
 class NetImmerseOverrideForSKSE(SkyrimMod):
+    def run_post_processing(self):
+        # TODO: add run of GenerateFNISforUsers?
+        pass
+
+@Singleton
+class PopulatedCities(SkyrimMod):
     def run_post_processing(self):
         # TODO: add run of GenerateFNISforUsers?
         pass

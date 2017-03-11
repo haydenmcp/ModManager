@@ -9,6 +9,9 @@ class FoundationPatchPack(SkyrimModPackage):
         return (
             skyrim_mods.UnofficialHighResolutionPatch.Instance(),
             skyrim_mods.UnofficialSkyrimPatch.Instance(),
+            skyrim_mods.UnofficialDawnguardPatch.Instance(),
+            skyrim_mods.UnofficialHearthfirePatch.Instance(),
+            skyrim_mods.UnofficialDragonbornPatch.Instance(),
             # skyrim_mods.UnofficialSkyrimLegendaryEditionPatch.Instance(),
             skyrim_mods.OptimizedVanillaTextures.Instance(),
             skyrim_mods.StaticMeshImprovementMod.Instance(),
@@ -51,7 +54,6 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.VerdantGrassPlugin.Instance(),
             skyrim_mods.VerdantGrassPluginDarkGrassTextureOption.Instance(),
             skyrim_mods.NaturalGrassTextureFloor.Instance(),
-            skyrim_mods.RealVisionFloraPatch.Instance(),
             skyrim_mods.HighDefinitionIvy2K.Instance(),
             skyrim_mods.DetailedRugs.Instance(),
             skyrim_mods.PureWatersLegendaryEdition.Instance(),
@@ -60,10 +62,10 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
             skyrim_mods.SuperiorRocksLightGrey4K.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
-            skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
+            # skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
             skyrim_mods.VividLandscapesTundraSMIMPatch.Instance(),
-            skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
+            # skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
             # skyrim_mods.VividCloudsAndFogs.Instance(),
             # skyrim_mods.VividCloudsAndFogsClimatesOfTamrielPatch.Instance(),
             skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
@@ -93,6 +95,83 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.HighDefinitionFoodAndIngredients.Instance(),
         )
 
+class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
+
+    # todo; remove environmental enhancements from high res pack. Enhancements should be separate.
+    # TODO: Eliminate patch definitions. Patches should be auto-handled by installer. Need to ensure
+    # TODO: correctness of that subsystem.
+    def mods(self):
+        return (
+            # Environment models/textures
+            skyrim_mods.RuinsClutterImproved.Instance(),
+            skyrim_mods.CinematicFireEffects.Instance(),
+            skyrim_mods.HDEnhancedTerrain.Instance(),
+            skyrim_mods.SkyrimDistanceOverhaul.Instance(),
+            skyrim_mods.SkyrimDistanceOverhaulSkymillsPatch.Instance(),
+            skyrim_mods.AnimatedDistantWaterfallsAndWindmills.Instance(),
+            skyrim_mods.SkyrimHDFullVersion.Instance(),
+            # skyrim_mods.SkyrimCityBeautificationAllInOneByJK.Instance(),
+            skyrim_mods.VividLandscapesDungeonsAndRuins.Instance(),
+            skyrim_mods.VividLandscapesDungeonsAndRuinsSMIMPatch.Instance(),
+            skyrim_mods.VividLandscapesVolcanicArea.Instance(),
+            skyrim_mods.QualityWorldMapVividFlatRoadEdition.Instance(),
+            skyrim_mods.AMidianBornCavesAndMines2k.Instance(),
+            skyrim_mods.ImmersiveRoads.Instance(),
+            skyrim_mods.ImmersiveRoadsReduceSnowShineTo40Percent.Instance(),
+            skyrim_mods.SkyrimFloraOverhaul.Instance(),
+            skyrim_mods.SkyrimFloraOverhaulTallPines.Instance(),
+            skyrim_mods.TreesHD.Instance(),
+            skyrim_mods.SimplyBiggerTrees.Instance(),
+            skyrim_mods.SimplyBiggerTreesSlowerBranches.Instance(),
+            skyrim_mods.ParallaxTreebark4K.Instance(),
+            skyrim_mods.ParallaxTreebark4KSimplyBiggerTreesPatch.Instance(),
+            skyrim_mods.ImmersiveFallenTrees.Instance(),
+            skyrim_mods.FencesOfSkyrim.Instance(),
+            skyrim_mods.RusticWindows2K.Instance(),
+            skyrim_mods.VerdantGrassPlugin.Instance(),
+            skyrim_mods.VerdantGrassPluginDarkGrassTextureOption.Instance(),
+            skyrim_mods.NaturalGrassTextureFloor.Instance(),
+            skyrim_mods.HighDefinitionIvy2K.Instance(),
+            skyrim_mods.DetailedRugs.Instance(),
+            skyrim_mods.PureWatersLegendaryEdition.Instance(),
+            skyrim_mods.PureWatersLandscapeTextures.Instance(),
+            skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
+            # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
+            skyrim_mods.SuperiorRocksLightGrey4K.Instance(),
+            skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
+            # skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
+            skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
+            skyrim_mods.VividLandscapesTundraSMIMPatch.Instance(),
+            # skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
+            # skyrim_mods.VividCloudsAndFogs.Instance(),
+            # skyrim_mods.VividCloudsAndFogsClimatesOfTamrielPatch.Instance(),
+            skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
+            skyrim_mods.FinerDust.Instance(),
+            skyrim_mods.RealisticSmokeAndEmbers.Instance(),
+            skyrim_mods.LanternsOfSkyrim.Instance(),
+            skyrim_mods.BlacksmithWaterFix.Instance(),
+            skyrim_mods.HDArmoredCirclets.Instance(),
+            skyrim_mods.IntricateSpiderWebs.Instance(),
+            skyrim_mods.RiversideLodge.Instance(),
+            skyrim_mods.ParticlePatchForENB.Instance(), # todo: how to include ENB outside of this pack? It's not really related
+            skyrim_mods.SubsurfaceScatteringPatchForENB.Instance(),
+            skyrim_mods.ParallaxTerrain4K.Instance(),
+            skyrim_mods.HighDefinitionCoins.Instance(),
+            skyrim_mods.CoastBeachTexturesForParallax.Instance(),
+            skyrim_mods.PineForestTexturesForParallax.Instance(),
+            skyrim_mods.ClimatesOfTamriel.Instance(),
+            skyrim_mods.ClimatesOfTamrielSupremeStorms.Instance(),
+            skyrim_mods.ClimatesOfTamrielWeatherPatch.Instance(),
+            skyrim_mods.TrueStorms.Instance(),
+            skyrim_mods.EnhancedBloodTextures.Instance(),
+            skyrim_mods.FootprintsInSnow.Instance(),
+            skyrim_mods.RealisticLightingOverhaul.Instance(),
+            skyrim_mods.EnbSeriesV308.Instance(),
+            skyrim_mods.TrueVisionENB.Instance(),
+            skyrim_mods.HighDefinitionFoodAndIngredients.Instance(),
+            skyrim_mods.PopulatedCities.Instance(),
+        )
+
 class ActorModelAndTexturePack(SkyrimModPackage):
     def mods(self):
         return (skyrim_mods.ShowRaceMenuPrecacheKiller.Instance(),
@@ -101,16 +180,21 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.ApachiiSkyHairFull.Instance(),
                 skyrim_mods.ApachiiSkyHairFemale.Instance(),
                 skyrim_mods.ApachiiSkyHairMale.Instance(),
+                skyrim_mods.DimonizedUNPFemaleBodyUnderC.Instance(),
                 skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
                 skyrim_mods.UNPMainFemaleBodyReplacer.Instance(),
                 skyrim_mods.AllInOneFacePackUNP.Instance(),
                 skyrim_mods.SportySexySweat.Instance(),
                 skyrim_mods.BetterMalesFace.Instance(),
                 skyrim_mods.BetterMalesBody.Instance(),
+                # skyrim_mods.SkySightSkinsHDMaleTextures.Instance(),
                 skyrim_mods.EyesOfBeauty.Instance(),
                 skyrim_mods.EyesOfBeautyNPC.Instance(),
                 skyrim_mods.HighDefinitionTeeth.Instance(),
-                skyrim_mods.RealisticRagdollsAndForce.Instance(),)
+                skyrim_mods.RealisticRagdollsAndForce.Instance(),
+                skyrim_mods.OrdinaryWomenOfSkyrim.Instance(),
+                skyrim_mods.MalesOfSkyrim.Instance(),
+                skyrim_mods.UGarmentsForAll.Instance(),)
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
@@ -126,7 +210,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.ImmersivePatrols.Instance(),
             skyrim_mods.TouringCarriages.Instance(),
             skyrim_mods.RSChildrenOverhaul.Instance(),
-            skyrim_mods.RSChildrenOverhaulUnofficialSkyrimPatch.Instance(),
+            # skyrim_mods.RSChildrenOverhaulUnofficialSkyrimPatch.Instance(),
             skyrim_mods.ImmersiveHUD.Instance(),
             skyrim_mods.ImmersiveArmorsPart1.Instance(),
             skyrim_mods.ImmersiveArmorsPart2.Instance(),
@@ -135,7 +219,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.WearableLanterns.Instance(),
             skyrim_mods.AmazingFollowerTweaks.Instance(),
             skyrim_mods.DuelCombatRealism.Instance(),
-            # skyrim_mods.Warzones2015.Instance(),
+            skyrim_mods.Warzones2015.Instance(),
             skyrim_mods.ImprovedCombatSounds.Instance(),
         )
 
@@ -154,7 +238,10 @@ class WeaponAndArmorPack(SkyrimModPackage):
                 skyrim_mods.WarriorWithinWeapons.Instance(),
                 skyrim_mods.DreadKnightWeaponSet.Instance(),
                 skyrim_mods.LOTRWeapons.Instance(),
-                skyrim_mods.ApocalypseMagic.Instance(),)
+                skyrim_mods.ApocalypseMagic.Instance(),
+                skyrim_mods.PerfectLegionnaireArmor.Instance(),
+                skyrim_mods.HighDefinitionArmoredCirclets4K.Instance(),
+                skyrim_mods.RealisticBowSounds.Instance(),)
 
 class AnimationFoundationPack(SkyrimModPackage):
     def mods(self):
@@ -166,5 +253,10 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 
 class TestPackage(SkyrimModPackage):
     def mods(self):
-        return (skyrim_mods.VividLandscapesRockingStonesParallaxGrey2K.Instance(),)
+        return (
+            skyrim_mods.BetterMalesFace.Instance(),
+            skyrim_mods.BetterMalesBody.Instance(),
+            skyrim_mods.OrdinaryWomenOfSkyrim.Instance(),
+            skyrim_mods.MalesOfSkyrim.Instance(),
+        )
 
