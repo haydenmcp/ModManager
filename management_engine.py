@@ -43,7 +43,7 @@ class SkyrimModManager(ModManager):
             for mod_package in mod_packages:
                 if is_valid_package(mod_package):
                     self._install_mods(mod_package.mods())
-                    self._update_game_configurations()
+            self._update_game_configurations()
             self._record_activity_in_install_history()
 
     def install_is_pending(self, mod):
@@ -52,7 +52,6 @@ class SkyrimModManager(ModManager):
             mod_was_previously_installed = self.is_in_install_history(mod)
             return mod_is_currently_pending and not mod_was_previously_installed
 
-    # TODO: Better name?
     def is_in_install_history(self, mod):
         mod_was_previously_installed = False
         if mod.__class__.__name__ in self._mod_installation_history:
@@ -155,7 +154,7 @@ class SkyrimModManager(ModManager):
             log.debug("Registering Patches: {0}".format(mod.patches()))
             for patch in mod.patches():
                 if is_valid_patch(patch):
-                    self._map_mod_relationships([patch.patch_mod])
+                    self._register_mod(patch.patch_mod)
 
     def _register_mod(self, mod):
         if is_valid_mod(mod):

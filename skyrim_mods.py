@@ -354,12 +354,29 @@ class EnbSeriesV308(SkyrimMod):
 @Singleton
 class RealVisionENB(SkyrimMod):
 
-    # # TODO: Post processing fails because of script being run from application. Troubleshoot.
-    # def run_post_processing(self):
-    #     log.info("Running 'RV_launcher.exe'")
-    #     install_script = "{0}/RealVision_ENB_files/RV_launcher.exe".format(appconfig.SKYRIM_DATA_DIR)
-    #     if os.path.exists(install_script):
-    #         subprocess.call([install_script])
+    def run_post_processing(self):
+        realvision_file_dir = "{0}/RealVision_ENB_files/{1}"
+        install_script = realvision_file_dir.format(appconfig.SKYRIM_DATA_DIR, r"RV_install.vbe")
+        set_ini_script = realvision_file_dir.format(appconfig.SKYRIM_DATA_DIR, r"RV_INIeditor.vbe")
+        run_vb_script(install_script)
+        run_vb_script(set_ini_script)
+
+    def configurations(self):
+        return {appconfig.SKYRIM_ENBLOCAL_INI_FILE: {"FIX": {"FixParallaxTerrain": True}},
+
+                # Subsurface Skin Scattering
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Quality": 0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Radius": 9.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Amount": 0.35}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"EpidermalAmount": 7.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalAmount": 7.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"EpidermalDiffuseSaturation": 0.88}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalDiffuseSaturation": 0.88}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"EpidermalMix": 0.05}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalMix": 1.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalTranslucency": 0.1}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalPhase": 0.69}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"EFFECT": {"EnableSubSurfaceScattering": True}},}
 
     def patches(self):
         return (modcore.Patch(self, RealVisionFloraPatch.Instance(), RealVisionENB.Instance()),)
@@ -370,9 +387,8 @@ class RealVisionENB(SkyrimMod):
 @Singleton
 class TrueVisionENB(SkyrimMod):
 
-    # TODO: Post processing fails because of script being run from application. Troubleshoot.
     def run_post_processing(self):
-        realvision_file_dir = "{0}/RealVision_ENB_files/{1}"
+        realvision_file_dir = "{0}/TrueVision_ENB_files/{1}"
         install_script = realvision_file_dir.format(appconfig.SKYRIM_DATA_DIR, r"RV_install.vbe")
         set_ini_script = realvision_file_dir.format(appconfig.SKYRIM_DATA_DIR, r"RV_INIeditor.vbe")
         run_vb_script(install_script)
@@ -381,7 +397,22 @@ class TrueVisionENB(SkyrimMod):
     def configurations(self):
         return {appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bFloatPointRenderTarget": 1}},
                 appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bDrawLandShadows": 1}},
-                appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bTreesReceiveShadows": 1}},}
+                appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bTreesReceiveShadows": 1}},
+                appconfig.SKYRIM_ENBLOCAL_INI_FILE: {"FIX": {"FixParallaxTerrain": True}},
+
+                # Subsurface Skin Scattering
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Quality": 0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Radius": 9.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Amount": 0.35}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"EpidermalAmount": 7.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalAmount": 7.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"EpidermalDiffuseSaturation": 0.88}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalDiffuseSaturation": 0.88}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"EpidermalMix": 0.05}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalMix": 1.0}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalTranslucency": 0.1}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"SubdermalPhase": 0.69}},
+                appconfig.SKYRIM_ENBSERIES_INI_FILE: {"EFFECT": {"EnableSubSurfaceScattering": True}},}
 
     def dependencies(self):
         return (modcore.Dependency(self, EnbSeriesV308.Instance()),)
@@ -505,6 +536,10 @@ class MalesOfSkyrim(SkyrimMod):
 
 @Singleton
 class OrdinaryWomenOfSkyrim(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionEyeBrows(SkyrimMod):
     pass
 
 # class EnhancedCharacterEdit(SkyrimMod):
@@ -668,6 +703,23 @@ class ImprovedCombatSoundsEnhancedBloodTexturesPatch(SkyrimMod):
 class BeltFastenedQuivers(SkyrimMod):
     pass
 
+@Singleton
+class ImmersiveJewelry(SkyrimMod):
+    pass
+
+@Singleton
+class RemoveLevelCapAt100(SkyrimMod):
+    pass
+
+@Singleton
+class ReduceDistanceNPCGreeting(SkyrimMod):
+    pass
+
+@Singleton
+class BuyableBusinessesAndRealEstate(SkyrimMod):
+    pass
+
+
 ###############################################################################
 #   Weapons/Armor mods
 ###############################################################################
@@ -767,14 +819,50 @@ class OSAnimations(SkyrimMod):
 @Singleton
 class NetImmerseOverrideForSKSE(SkyrimMod):
     def run_post_processing(self):
-        # TODO: add run of GenerateFNISforUsers?
         pass
 
 @Singleton
 class PopulatedCities(SkyrimMod):
     def run_post_processing(self):
-        # TODO: add run of GenerateFNISforUsers?
         pass
+
+@Singleton
+class HighDefinitionFood(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionMiscellaneousItems(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionWoodCuttersAxe(SkyrimMod):
+    def patches(self):
+        return (modcore.Patch(self, HighDefinitionWoodCuttersAxeFrostfallPatch.Instance(), FrostfallSurvival.Instance()),)
+
+@Singleton
+class HighDefinitionWoodCuttersAxeFrostfallPatch(SkyrimMod):
+    def dependencies(self):
+        return (modcore.Dependency(self, HighDefinitionWoodCuttersAxe.Instance()),)
+
+@Singleton
+class HighDefinitionBookCovers(SkyrimMod):
+    pass
+
+@Singleton
+class FasterHorseSprint(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionInsects(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionDragons(SkyrimMod):
+    pass
+
+@Singleton
+class AddBirdSpecies(SkyrimMod):
+    pass
 
 ###############################################################################
 #   Helper functions

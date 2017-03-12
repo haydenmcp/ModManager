@@ -170,6 +170,13 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.TrueVisionENB.Instance(),
             skyrim_mods.HighDefinitionFoodAndIngredients.Instance(),
             skyrim_mods.PopulatedCities.Instance(),
+            skyrim_mods.HighDefinitionFood.Instance(),
+            skyrim_mods.HighDefinitionMiscellaneousItems.Instance(),
+            skyrim_mods.HighDefinitionWoodCuttersAxe.Instance(),
+            skyrim_mods.HighDefinitionBookCovers.Instance(),
+            skyrim_mods.HighDefinitionInsects.Instance(),
+            skyrim_mods.HighDefinitionDragons.Instance(),
+            skyrim_mods.AddBirdSpecies.Instance(),
         )
 
 class ActorModelAndTexturePack(SkyrimModPackage):
@@ -182,14 +189,14 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.ApachiiSkyHairMale.Instance(),
                 skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
                 skyrim_mods.DimonizedUNPFemaleBody.Instance(),
-                skyrim_mods.UNPMainFemaleBodyReplacer.Instance(),
                 skyrim_mods.AllInOneFacePackUNP.Instance(),
-                # skyrim_mods.SportySexySweat.Instance(),
-                skyrim_mods.BetterMalesFace.Instance(),
-                skyrim_mods.BetterMalesBody.Instance(),
-                # skyrim_mods.SkySightSkinsHDMaleTextures.Instance(),
+                skyrim_mods.SportySexySweat.Instance(),
+                # skyrim_mods.BetterMalesFace.Instance(),
+                # skyrim_mods.BetterMalesBody.Instance(),
+                skyrim_mods.SkySightSkinsHDMaleTextures.Instance(),
                 skyrim_mods.EyesOfBeauty.Instance(),
                 skyrim_mods.EyesOfBeautyNPC.Instance(),
+                skyrim_mods.HighDefinitionEyeBrows.Instance(),
                 skyrim_mods.HighDefinitionTeeth.Instance(),
                 skyrim_mods.RealisticRagdollsAndForce.Instance(),
                 skyrim_mods.OrdinaryWomenOfSkyrim.Instance(),
@@ -220,6 +227,11 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.DuelCombatRealism.Instance(),
             skyrim_mods.Warzones2015.Instance(),
             skyrim_mods.ImprovedCombatSounds.Instance(),
+            skyrim_mods.ImmersiveJewelry.Instance(),
+            skyrim_mods.RemoveLevelCapAt100.Instance(),
+            skyrim_mods.ReduceDistanceNPCGreeting.Instance(),
+            skyrim_mods.BuyableBusinessesAndRealEstate.Instance(),
+            skyrim_mods.FasterHorseSprint.Instance(),
         )
 
 class WeaponAndArmorPack(SkyrimModPackage):
@@ -252,9 +264,6 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 class TestPackage(SkyrimModPackage):
     def mods(self):
         return (
-            skyrim_mods.BetterMalesFace.Instance(),
-            skyrim_mods.BetterMalesBody.Instance(),
-            skyrim_mods.OrdinaryWomenOfSkyrim.Instance(),
-            skyrim_mods.MalesOfSkyrim.Instance(),
+            skyrim_mods.HighDefinitionDragons.Instance(),
         )
 
