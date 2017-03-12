@@ -150,7 +150,7 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.RealisticSmokeAndEmbers.Instance(),
             skyrim_mods.LanternsOfSkyrim.Instance(),
             skyrim_mods.BlacksmithWaterFix.Instance(),
-            skyrim_mods.HDArmoredCirclets.Instance(),
+            skyrim_mods.HighDefinitionArmoredCirclets4K.Instance(),
             skyrim_mods.IntricateSpiderWebs.Instance(),
             skyrim_mods.RiversideLodge.Instance(),
             skyrim_mods.ParticlePatchForENB.Instance(), # todo: how to include ENB outside of this pack? It's not really related
@@ -180,11 +180,11 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.ApachiiSkyHairFull.Instance(),
                 skyrim_mods.ApachiiSkyHairFemale.Instance(),
                 skyrim_mods.ApachiiSkyHairMale.Instance(),
-                skyrim_mods.DimonizedUNPFemaleBodyUnderC.Instance(),
                 skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
+                skyrim_mods.DimonizedUNPFemaleBody.Instance(),
                 skyrim_mods.UNPMainFemaleBodyReplacer.Instance(),
                 skyrim_mods.AllInOneFacePackUNP.Instance(),
-                skyrim_mods.SportySexySweat.Instance(),
+                # skyrim_mods.SportySexySweat.Instance(),
                 skyrim_mods.BetterMalesFace.Instance(),
                 skyrim_mods.BetterMalesBody.Instance(),
                 # skyrim_mods.SkySightSkinsHDMaleTextures.Instance(),
@@ -193,8 +193,7 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.HighDefinitionTeeth.Instance(),
                 skyrim_mods.RealisticRagdollsAndForce.Instance(),
                 skyrim_mods.OrdinaryWomenOfSkyrim.Instance(),
-                skyrim_mods.MalesOfSkyrim.Instance(),
-                skyrim_mods.UGarmentsForAll.Instance(),)
+                skyrim_mods.MalesOfSkyrim.Instance(),)
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
@@ -240,7 +239,6 @@ class WeaponAndArmorPack(SkyrimModPackage):
                 skyrim_mods.LOTRWeapons.Instance(),
                 skyrim_mods.ApocalypseMagic.Instance(),
                 skyrim_mods.PerfectLegionnaireArmor.Instance(),
-                skyrim_mods.HighDefinitionArmoredCirclets4K.Instance(),
                 skyrim_mods.RealisticBowSounds.Instance(),)
 
 class AnimationFoundationPack(SkyrimModPackage):
