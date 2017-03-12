@@ -861,6 +861,10 @@ class HighDefinitionDragons(SkyrimMod):
     pass
 
 @Singleton
+class HighDefinitionBeards(SkyrimMod):
+    pass
+
+@Singleton
 class AddBirdSpecies(SkyrimMod):
     pass
 

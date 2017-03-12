@@ -30,12 +30,10 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.CinematicFireEffects.Instance(),
             skyrim_mods.HDEnhancedTerrain.Instance(),
             skyrim_mods.SkyrimDistanceOverhaul.Instance(),
-            skyrim_mods.SkyrimDistanceOverhaulSkymillsPatch.Instance(),
             skyrim_mods.AnimatedDistantWaterfallsAndWindmills.Instance(),
             skyrim_mods.SkyrimHDFullVersion.Instance(),
             # skyrim_mods.SkyrimCityBeautificationAllInOneByJK.Instance(),
             skyrim_mods.VividLandscapesDungeonsAndRuins.Instance(),
-            skyrim_mods.VividLandscapesDungeonsAndRuinsSMIMPatch.Instance(),
             skyrim_mods.VividLandscapesVolcanicArea.Instance(),
             skyrim_mods.QualityWorldMapVividFlatRoadEdition.Instance(),
             skyrim_mods.AMidianBornCavesAndMines2k.Instance(),
@@ -47,7 +45,6 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             skyrim_mods.SimplyBiggerTrees.Instance(),
             skyrim_mods.SimplyBiggerTreesSlowerBranches.Instance(),
             skyrim_mods.ParallaxTreebark4K.Instance(),
-            skyrim_mods.ParallaxTreebark4KSimplyBiggerTreesPatch.Instance(),
             skyrim_mods.ImmersiveFallenTrees.Instance(),
             skyrim_mods.FencesOfSkyrim.Instance(),
             skyrim_mods.RusticWindows2K.Instance(),
@@ -62,12 +59,8 @@ class RealisticWorldWithRealVisionENB(SkyrimModPackage):
             # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
             skyrim_mods.SuperiorRocksLightGrey4K.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
-            # skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
-            skyrim_mods.VividLandscapesTundraSMIMPatch.Instance(),
-            # skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
             # skyrim_mods.VividCloudsAndFogs.Instance(),
-            # skyrim_mods.VividCloudsAndFogsClimatesOfTamrielPatch.Instance(),
             skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
             skyrim_mods.FinerDust.Instance(),
             skyrim_mods.RealisticSmokeAndEmbers.Instance(),
@@ -107,12 +100,10 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.CinematicFireEffects.Instance(),
             skyrim_mods.HDEnhancedTerrain.Instance(),
             skyrim_mods.SkyrimDistanceOverhaul.Instance(),
-            skyrim_mods.SkyrimDistanceOverhaulSkymillsPatch.Instance(),
             skyrim_mods.AnimatedDistantWaterfallsAndWindmills.Instance(),
             skyrim_mods.SkyrimHDFullVersion.Instance(),
             # skyrim_mods.SkyrimCityBeautificationAllInOneByJK.Instance(),
             skyrim_mods.VividLandscapesDungeonsAndRuins.Instance(),
-            skyrim_mods.VividLandscapesDungeonsAndRuinsSMIMPatch.Instance(),
             skyrim_mods.VividLandscapesVolcanicArea.Instance(),
             skyrim_mods.QualityWorldMapVividFlatRoadEdition.Instance(),
             skyrim_mods.AMidianBornCavesAndMines2k.Instance(),
@@ -124,7 +115,6 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.SimplyBiggerTrees.Instance(),
             skyrim_mods.SimplyBiggerTreesSlowerBranches.Instance(),
             skyrim_mods.ParallaxTreebark4K.Instance(),
-            skyrim_mods.ParallaxTreebark4KSimplyBiggerTreesPatch.Instance(),
             skyrim_mods.ImmersiveFallenTrees.Instance(),
             skyrim_mods.FencesOfSkyrim.Instance(),
             skyrim_mods.RusticWindows2K.Instance(),
@@ -137,14 +127,10 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.PureWatersLandscapeTextures.Instance(),
             skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
             # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
-            skyrim_mods.SuperiorRocksLightGrey4K.Instance(),
+            skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
-            # skyrim_mods.VividLandscapesRockingStonesCompatibilityPatch.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
-            skyrim_mods.VividLandscapesTundraSMIMPatch.Instance(),
-            # skyrim_mods.VividLandscapesTundraMossMountainPatch.Instance(),
             # skyrim_mods.VividCloudsAndFogs.Instance(),
-            # skyrim_mods.VividCloudsAndFogsClimatesOfTamrielPatch.Instance(),
             skyrim_mods.HorizonOfDreamsHDNightSky.Instance(),
             skyrim_mods.FinerDust.Instance(),
             skyrim_mods.RealisticSmokeAndEmbers.Instance(),
@@ -200,7 +186,8 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.HighDefinitionTeeth.Instance(),
                 skyrim_mods.RealisticRagdollsAndForce.Instance(),
                 skyrim_mods.OrdinaryWomenOfSkyrim.Instance(),
-                skyrim_mods.MalesOfSkyrim.Instance(),)
+                skyrim_mods.MalesOfSkyrim.Instance(),
+                skyrim_mods.HighDefinitionBeards.Instance(),)
 
 class HarshSkyrimImmersionPack(SkyrimModPackage):
     def mods(self):
@@ -216,11 +203,9 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.ImmersivePatrols.Instance(),
             skyrim_mods.TouringCarriages.Instance(),
             skyrim_mods.RSChildrenOverhaul.Instance(),
-            # skyrim_mods.RSChildrenOverhaulUnofficialSkyrimPatch.Instance(),
             skyrim_mods.ImmersiveHUD.Instance(),
             skyrim_mods.ImmersiveArmorsPart1.Instance(),
             skyrim_mods.ImmersiveArmorsPart2.Instance(),
-            skyrim_mods.ImmersiveArmorsUNPPatch.Instance(),
             skyrim_mods.ImmersiveWeapons.Instance(),
             skyrim_mods.WearableLanterns.Instance(),
             skyrim_mods.AmazingFollowerTweaks.Instance(),
@@ -264,6 +249,6 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 class TestPackage(SkyrimModPackage):
     def mods(self):
         return (
-            skyrim_mods.HighDefinitionDragons.Instance(),
+            skyrim_mods.HighDefinitionBeards.Instance(),
         )
 
