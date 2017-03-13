@@ -128,7 +128,7 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
             # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
             # skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
-            skyrim_mods.HighDefinitionMountains_RealMountains.Instance(),
+            skyrim_mods.HighDefinitionMountains_RealMountains2KBrown.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
             # skyrim_mods.VividCloudsAndFogs.Instance(),
@@ -261,6 +261,6 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 class TestPackage(SkyrimModPackage):
     def mods(self):
         return (
-            skyrim_mods.HighDefinitionMountains_RealMountains.Instance(),
+            skyrim_mods.HighDefinitionMountains_RealMountains4KBrown.Instance(),
         )
 

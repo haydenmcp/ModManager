@@ -873,7 +873,11 @@ class MainMenuReplacer(SkyrimMod):
     pass
 
 @Singleton
-class HighDefinitionMountains_RealMountains(SkyrimMod):
+class HighDefinitionMountains_RealMountains4KBrown(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionMountains_RealMountains2KBrown(SkyrimMod):
     pass
 
 @Singleton
