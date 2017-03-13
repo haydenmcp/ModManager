@@ -865,6 +865,54 @@ class HighDefinitionBeards(SkyrimMod):
     pass
 
 @Singleton
+class HighDefinitionGems(SkyrimMod):
+    pass
+
+@Singleton
+class MainMenuReplacer(SkyrimMod):
+    pass
+
+@Singleton
+class HighDefinitionMountains_RealMountains(SkyrimMod):
+    pass
+
+@Singleton
+class AddPlayerHome_AzuraDawnMansion(SkyrimMod):
+    def patches(self):
+        # Depends on hearthfire patch because this mod manager doesn't handle official DLCs.
+        # But if the hearthfire patch is included, hearthfire must also be included.
+        return (modcore.Patch(self, AddPlayerHome_AzuraDawnMansionHearthfirePatch.Instance(),
+                              UnofficialHearthfirePatch.Instance()),)
+
+@Singleton
+class AddPlayerHome_AzuraDawnMansionHearthfirePatch(SkyrimMod):
+    pass
+
+@Singleton
+class AddNewClothing_CommonClothes(SkyrimMod):
+    pass
+
+@Singleton
+class AddCompanions_SkyCompanionsUNP(SkyrimMod):
+    pass
+
+@Singleton
+class AddCompanions_Hoth(SkyrimMod):
+    pass
+
+@Singleton
+class AddCompanions_DanarielStormbow(SkyrimMod):
+    pass
+
+@Singleton
+class BalanceNPCSocialAtmosphere_InconsequentialNPC(SkyrimMod):
+    pass
+
+@Singleton
+class ExtremelyDeadlyArrows_DeadlyArrows(SkyrimMod):
+    pass
+
+@Singleton
 class AddBirdSpecies(SkyrimMod):
     pass
 

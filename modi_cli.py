@@ -14,9 +14,11 @@ def run_skyrim_install():
     #     skyrim_packages.RealisticWorldWithTrueVisionENB(),
     #     skyrim_packages.ActorModelAndTexturePack(),
     #     skyrim_packages.HarshSkyrimImmersionPack(),
+    #     skyrim_packages.NPCPack(),
     #     skyrim_packages.WeaponAndArmorPack(),
     # ])
     client.install_mod_packages([
+        skyrim_packages.NPCPack(),
         skyrim_packages.TestPackage(),
     ])
 

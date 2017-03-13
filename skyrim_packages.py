@@ -127,7 +127,8 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.PureWatersLandscapeTextures.Instance(),
             skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
             # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
-            skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
+            # skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
+            skyrim_mods.HighDefinitionMountains_RealMountains.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
             # skyrim_mods.VividCloudsAndFogs.Instance(),
@@ -162,7 +163,10 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.HighDefinitionBookCovers.Instance(),
             skyrim_mods.HighDefinitionInsects.Instance(),
             skyrim_mods.HighDefinitionDragons.Instance(),
+            skyrim_mods.HighDefinitionGems.Instance(),
             skyrim_mods.AddBirdSpecies.Instance(),
+            skyrim_mods.MainMenuReplacer.Instance(),
+            skyrim_mods.AddNewClothing_CommonClothes.Instance(),
         )
 
 class ActorModelAndTexturePack(SkyrimModPackage):
@@ -217,6 +221,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.ReduceDistanceNPCGreeting.Instance(),
             skyrim_mods.BuyableBusinessesAndRealEstate.Instance(),
             skyrim_mods.FasterHorseSprint.Instance(),
+            skyrim_mods.ExtremelyDeadlyArrows_DeadlyArrows.Instance(),
         )
 
 class WeaponAndArmorPack(SkyrimModPackage):
@@ -238,6 +243,13 @@ class WeaponAndArmorPack(SkyrimModPackage):
                 skyrim_mods.PerfectLegionnaireArmor.Instance(),
                 skyrim_mods.RealisticBowSounds.Instance(),)
 
+class NPCPack(SkyrimModPackage):
+    def mods(self):
+        return (skyrim_mods.AddCompanions_SkyCompanionsUNP.Instance(),
+                skyrim_mods.AddCompanions_Hoth.Instance(),
+                skyrim_mods.AddCompanions_DanarielStormbow.Instance(),
+                skyrim_mods.BalanceNPCSocialAtmosphere_InconsequentialNPC.Instance(),)
+
 class AnimationFoundationPack(SkyrimModPackage):
     def mods(self):
         return (skyrim_mods.FNISAnimation.Instance(),)
@@ -249,6 +261,6 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 class TestPackage(SkyrimModPackage):
     def mods(self):
         return (
-            skyrim_mods.HighDefinitionBeards.Instance(),
+            skyrim_mods.HighDefinitionMountains_RealMountains.Instance(),
         )
 
