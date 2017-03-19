@@ -95,6 +95,7 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
     # TODO: correctness of that subsystem.
     def mods(self):
         return (
+            skyrim_mods.DummyModToApplyStandardConfigurationChanges.Instance(),
             # Environment models/textures
             skyrim_mods.RuinsClutterImproved.Instance(),
             skyrim_mods.CinematicFireEffects.Instance(),
@@ -127,8 +128,8 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.PureWatersLandscapeTextures.Instance(),
             skyrim_mods.WondersOfWeatherRainDropSplashAndInteriorSounds.Instance(),
             # skyrim_mods.VividLandscapesRockingStonesParallax.Instance(), TODO: Pick this one or one below
-            # skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
-            skyrim_mods.HighDefinitionMountains_RealMountains2KBrown.Instance(),
+            skyrim_mods.SuperiorRocksDarkGrey4K.Instance(),
+            # skyrim_mods.HighDefinitionMountains_RealMountains2KBrown.Instance(),
             skyrim_mods.VividLandscapesCliffsAndCreeks.Instance(),
             skyrim_mods.VividLandscapesTundraMossRevisited.Instance(),
             # skyrim_mods.VividCloudsAndFogs.Instance(),
@@ -166,6 +167,7 @@ class RealisticWorldWithTrueVisionENB(SkyrimModPackage):
             skyrim_mods.HighDefinitionGems.Instance(),
             skyrim_mods.AddBirdSpecies.Instance(),
             skyrim_mods.MainMenuReplacer.Instance(),
+            skyrim_mods.RemoveFogFromMainMenuAndLoadScreens.Instance(),
             skyrim_mods.AddNewClothing_CommonClothes.Instance(),
         )
 
@@ -180,7 +182,7 @@ class ActorModelAndTexturePack(SkyrimModPackage):
                 skyrim_mods.ApachiiSkyHairNaturalRetexture.Instance(),
                 skyrim_mods.DimonizedUNPFemaleBody.Instance(),
                 skyrim_mods.AllInOneFacePackUNP.Instance(),
-                skyrim_mods.SportySexySweat.Instance(),
+                # skyrim_mods.SportySexySweat.Instance(),
                 # skyrim_mods.BetterMalesFace.Instance(),
                 # skyrim_mods.BetterMalesBody.Instance(),
                 skyrim_mods.SkySightSkinsHDMaleTextures.Instance(),
@@ -248,7 +250,8 @@ class NPCPack(SkyrimModPackage):
         return (skyrim_mods.AddCompanions_SkyCompanionsUNP.Instance(),
                 skyrim_mods.AddCompanions_Hoth.Instance(),
                 skyrim_mods.AddCompanions_DanarielStormbow.Instance(),
-                skyrim_mods.BalanceNPCSocialAtmosphere_InconsequentialNPC.Instance(),)
+                # skyrim_mods.BalanceNPCSocialAtmosphere_InconsequentialNPC.Instance(),
+                )
 
 class AnimationFoundationPack(SkyrimModPackage):
     def mods(self):
@@ -261,6 +264,6 @@ class ImmersiveAnimationPack(SkyrimModPackage):
 class TestPackage(SkyrimModPackage):
     def mods(self):
         return (
-            skyrim_mods.HighDefinitionMountains_RealMountains4KBrown.Instance(),
+            skyrim_mods.DummyModToApplyStandardConfigurationChanges.Instance(),
         )
 

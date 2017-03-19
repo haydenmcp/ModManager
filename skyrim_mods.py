@@ -22,6 +22,30 @@ class SkyrimMod(ModBase):
 # Environment/Graphic mods
 ###############################################################################
 @Singleton
+class DummyModToApplyStandardConfigurationChanges(SkyrimMod):
+    def configurations(self):
+        # IMPORTANT: These configurations may not be advisable for all computers. Mine is
+        # fairly high end.
+        return {
+                # Allocated memory
+                appconfig.SKYRIM_INI_FILE: {"Papyrus": {r"iMaxAllocatedMemoryBytes:"
+                                                        r"Papyrus": 4294967295}},
+                appconfig.SKYRIM_INI_FILE: {"General": {"fMasterFilePreLoadMB": 128.0000}},
+                appconfig.SKYRIM_INI_FILE: {"General": {"iPreloadSizeLimit": 268435456}},
+
+                # These configurations increase draw distance. Comment if machine isn't high end
+                # Grid loading close
+                appconfig.SKYRIM_INI_FILE: {"General": {"uGridsToLoad": 7}},
+                appconfig.SKYRIM_INI_FILE: {"General": {"uInterior Cell Buffer": 32}},
+                appconfig.SKYRIM_INI_FILE: {"General": {"uExterior Cell Buffer": 64}},
+
+                # Loading in far distance
+                # appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel1Distance": 100000.0000}},
+                # appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel0Distance": 50000.0000}},
+               }
+
+
+@Singleton
 class OptimizedVanillaTextures(SkyrimMod):
     def run_post_processing(self):
         install_script = "{0}/Textures Install.vbs".format(appconfig.SKYRIM_DATA_DIR)
@@ -362,7 +386,10 @@ class RealVisionENB(SkyrimMod):
         run_vb_script(set_ini_script)
 
     def configurations(self):
-        return {appconfig.SKYRIM_ENBLOCAL_INI_FILE: {"FIX": {"FixParallaxTerrain": True}},
+        return {appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bFloatPointRenderTarget": 1}},
+                appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bDrawLandShadows": 1}},
+                appconfig.SKYRIM_PREFS_INI_FILE: {"Display": {"bTreesReceiveShadows": 1}},
+                appconfig.SKYRIM_ENBLOCAL_INI_FILE: {"FIX": {"FixParallaxTerrain": True}},
 
                 # Subsurface Skin Scattering
                 appconfig.SKYRIM_ENBSERIES_INI_FILE: {"SUBSURFACESCATTERING": {"Quality": 0}},
@@ -881,6 +908,10 @@ class HighDefinitionMountains_RealMountains2KBrown(SkyrimMod):
     pass
 
 @Singleton
+class HighDefinitionMountains_RealMountains4KDefault(SkyrimMod):
+    pass
+
+@Singleton
 class AddPlayerHome_AzuraDawnMansion(SkyrimMod):
     def patches(self):
         # Depends on hearthfire patch because this mod manager doesn't handle official DLCs.
@@ -918,6 +949,10 @@ class ExtremelyDeadlyArrows_DeadlyArrows(SkyrimMod):
 
 @Singleton
 class AddBirdSpecies(SkyrimMod):
+    pass
+
+@Singleton
+class RemoveFogFromMainMenuAndLoadScreens(SkyrimMod):
     pass
 
 ###############################################################################
