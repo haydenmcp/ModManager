@@ -28,16 +28,15 @@ class DummyModToApplyStandardConfigurationChanges(SkyrimMod):
         # fairly high end.
         return {
                 # Allocated memory
-                appconfig.SKYRIM_INI_FILE: {"Papyrus": {r"iMaxAllocatedMemoryBytes:"
-                                                        r"Papyrus": 4294967295}},
+                appconfig.SKYRIM_INI_FILE: {"Papyrus": {r"iMaxAllocatedMemoryBytes:Papyrus": 3000000000}},
                 appconfig.SKYRIM_INI_FILE: {"General": {"fMasterFilePreLoadMB": 128.0000}},
                 appconfig.SKYRIM_INI_FILE: {"General": {"iPreloadSizeLimit": 268435456}},
 
                 # These configurations increase draw distance. Comment if machine isn't high end
                 # Grid loading close
                 appconfig.SKYRIM_INI_FILE: {"General": {"uGridsToLoad": 7}},
-                appconfig.SKYRIM_INI_FILE: {"General": {"uInterior Cell Buffer": 32}},
-                appconfig.SKYRIM_INI_FILE: {"General": {"uExterior Cell Buffer": 64}},
+                appconfig.SKYRIM_INI_FILE: {"General": {"uInterior Cell Buffer": 50}},
+                appconfig.SKYRIM_INI_FILE: {"General": {"uExterior Cell Buffer": 100}},
 
                 # Loading in far distance
                 # appconfig.SKYRIM_PREFS_INI_FILE: {"TerrainManager": {"fBlockLevel1Distance": 100000.0000}},

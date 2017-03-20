@@ -216,7 +216,7 @@ class HarshSkyrimImmersionPack(SkyrimModPackage):
             skyrim_mods.WearableLanterns.Instance(),
             skyrim_mods.AmazingFollowerTweaks.Instance(),
             skyrim_mods.DuelCombatRealism.Instance(),
-            skyrim_mods.Warzones2015.Instance(),
+            # skyrim_mods.Warzones2015.Instance(),
             skyrim_mods.ImprovedCombatSounds.Instance(),
             skyrim_mods.ImmersiveJewelry.Instance(),
             skyrim_mods.RemoveLevelCapAt100.Instance(),
